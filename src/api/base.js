@@ -3,6 +3,7 @@ import { create } from 'apisauce';
 import { baseURL } from './urls';
 import { getSafeValue } from '../utils/api';
 import queryString from 'query-string';
+import reactotron from 'reactotron-react-native';
 const api = create({
     baseURL,
     headers: {},
@@ -59,7 +60,9 @@ export const getAPI = async (url = '', params = {}, opt = {}) => {
 };
 
 export const postAPI = async (url = '', params = {}, opt = {}) => {
+    
     const res = await api.post(url, params, opt);
+    reactotron.log(res)
 
     return handleRes(res);
 };

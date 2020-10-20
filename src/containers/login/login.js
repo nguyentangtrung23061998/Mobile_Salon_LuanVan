@@ -10,28 +10,29 @@ import HeaderNav from '../headernav/header_nav';
 import Input from '../inputprimary/input';
 import {styles} from './style';
 import PopUp from '../popup/pop_up';
+import useLogin from './use_login';
 
-const Login = () => {
-  // const {
-  //   form,
-  //   state,
-  //   goBack,
-  //   updateInputValidEvent,
-  //   isFormValid,
-  //   onCloseErrorPopUpEvent,
-  //   _navigation,
-  // } = useLogin();
-  // const passwordRef = useRef();
+export default React.memo(() => {
+  const {
+    form,
+    state,
+    goBack,
+    updateInputValidEvent,
+    isFormValid,
+    onCloseErrorPopUpEvent,
+    _navigation,
+  } = useLogin();
+  const passwordRef = useRef();
 
-  // const { handleBlur, setFieldValue, handleSubmit, errors, values } = form;
-  // const {
-  //   isMobileValid,
-  //   isPasswordValid,
-  //   isMobileFocused,
-  //   isPasswordFocused,
-  //   isSubmitting,
-  //   errorMsg,
-  // } = state;
+  const {handleBlur, setFieldValue, handleSubmit, errors, values} = form;
+  const {
+    isMobileValid,
+    isPasswordValid,
+    isMobileFocused,
+    isPasswordFocused,
+    isSubmitting,
+    errorMsg,
+  } = state;
 
   const _renderForm = () => {
     return (
@@ -54,8 +55,8 @@ const Login = () => {
             isMobileFocused
               ? '#0077be'
               : !isMobileValid && errors.mobile
-                ? '#ff0033'
-                : '#d0d0d0'
+              ? '#ff0033'
+              : '#d0d0d0'
           }
         />
         <Text style={styles.text0}>{'Mật khẩu'}</Text>
@@ -82,8 +83,8 @@ const Login = () => {
             isPasswordFocused
               ? '#0077be'
               : !isPasswordValid && errors.password
-                ? '#ff0033'
-                : '#d0d0d0'
+              ? '#ff0033'
+              : '#d0d0d0'
           }
         />
       </View>
@@ -113,20 +114,20 @@ const Login = () => {
                   isFormValid() ? '#4db1e9' : '#8d8d8d',
                   isFormValid() ? '#005eff' : '#8d8d8d',
                 ],
-                start: { x: 0, y: 1 },
-                end: { x: 0, y: 0 },
+                start: {x: 0, y: 1},
+                end: {x: 0, y: 0},
               }}
               title={'ĐĂNG NHẬP'}
               onPress={handleSubmit}
-              containerStyle={{ borderRadius: 20 }}
+              containerStyle={{borderRadius: 20}}
             />
           </View>
           {/* <TouchableOpacity
-                onPress={() => {
-                  _navigation.navigate('ForgotPassword');
-                }}>
-                <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
-              </TouchableOpacity> */}
+            onPress={() => {
+              _navigation.navigate('ForgotPassword');
+            }}>
+            <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
+          </TouchableOpacity> */}
         </View>
       </KeyboardAwareScrollView>
       <Spinner visible={isSubmitting} />
@@ -139,5 +140,4 @@ const Login = () => {
       />
     </SafeAreaView>
   );
-}
-export default Login;
+});

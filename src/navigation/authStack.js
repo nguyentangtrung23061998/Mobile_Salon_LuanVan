@@ -11,9 +11,9 @@ export default AuthStack = () => (<>
     <Stack.Navigator initialRouteName="Intro"
         headerMode="none"
         screenOptions={{ gestureEnabled: false }}>
-         {/* <Stack.Screen name="Intro" component={Intro} /> */}
+         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={Login} /> 
-        {/* <Stack.Screen component={VerifyDomain} name="VerifyDomain" /> */}
+        <Stack.Screen component={VerifyDomain} name="VerifyDomain" />
     </Stack.Navigator>
 </>)
 

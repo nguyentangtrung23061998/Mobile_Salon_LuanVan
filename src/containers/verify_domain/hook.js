@@ -12,6 +12,7 @@ import {
   setInputValid,
 } from './state';
 import {setDomainAddress} from '../login/with_login';
+import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.verifyDomain);
@@ -29,20 +30,21 @@ const useTodo = () => {
   });
 
   const _onSubmitSuccess = async (values) => {
+    reactotron.log("values", values);
     navigate('Login');
-    // dispatch(checkCheckdomainLoading());
-    // try {
-    //   const response = await checkCheckdomain(values.domainAddress);
-    //   if (isTwoStringEqual(response.status, 'success')) {
-    //     dispatch(setDomainAddress(values.domainAddress));
-    //     dispatch(checkCheckdomainSuccess());
-    //     navigate('Login');
-    //   } else {
-    //     dispatch(checkCheckdomainFaild(response.message));
-    //   }
-    // } catch (err) {
-    //   dispatch(checkCheckdomainFaild(err.errMsg));
-    // }
+    dispatch(checkCheckdomainLoading());
+    try {
+      const response = await checkCheckdomain(values.domainAddress);
+      if (isTwoStringEqual(response.status, 'success')) {
+        dispatch(setDomainAddress(values.domainAddress));
+        dispatch(checkCheckdomainSuccess());
+        navigate('Login');
+      } else {
+        dispatch(checkCheckdomainFaild(response.message));
+      }
+    } catch (err) {
+      dispatch(checkCheckdomainFaild(err.errMsg));
+    }
   };
 
   const form = useFormik({
