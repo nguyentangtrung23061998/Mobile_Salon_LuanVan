@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {MTPImage0} from '../../../../component/mtp_image';
+import {MTPImage0} from '../../../mtp_image';
 import styles from './style';
 const MyIcon = ({startColor, endColor, imageSource, label, onPress}) => {
   return (

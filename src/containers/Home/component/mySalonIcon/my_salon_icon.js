@@ -1,7 +1,7 @@
 import styles from './style';
 import React from 'react';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
-import {MTPImage0} from '../../../../component/mtp_image';
+import {MTPImage0} from '../../../mtp_image';
 
 const MySalonIcon = ({imageSource, title, description, onPress}) => {
   return (

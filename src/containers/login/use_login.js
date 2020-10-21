@@ -30,41 +30,42 @@ const useTodo = () => {
   const _navigation = useNavigation();
 
   const _onSubmitSuccess = async (values) => {
+    _navigation.navigate('Main');
     // reactotron.log("values", values);
-    dispatch(postLoginStart());
+    // dispatch(postLoginStart());
 
-    try {
-      const response = await postLogin(
-        state.domainAddress,
-        values.mobile,
-        values.password,
-      );
-      reactotron.log("response", response);
+    // try {
+    //   const response = await postLogin(
+    //     state.domainAddress,
+    //     values.mobile,
+    //     values.password,
+    //   );
+    //   reactotron.log("response", response);
 
-      if (response.status === 'success') {
-        const {storeInfo} = response.data.user;
-        const {token} = response.data.Auth;
-        const {profile} = response.data;
+    //   if (response.status === 'success') {
+    //     const {storeInfo} = response.data.user;
+    //     const {token} = response.data.Auth;
+    //     const {profile} = response.data;
 
-        await setStoreInfo(storeInfo);
-        await setToken(token);
-        await setProfile(profile);
+    //     await setStoreInfo(storeInfo);
+    //     await setToken(token);
+    //     await setProfile(profile);
 
-        dispatch(postLoginSuccess());
-        dispatch(setAuth(true));
-        dispatch(setDataHome({value: storeInfo}));
-        dispatch(setDataStoreDetails({value: storeInfo}));
-        dispatch(setDataEditProfile({value: profile}));
-        dispatch(setRole({value: profile?.role}));
-        dispatch(setIsCashier({value: profile?.isCashier}));
-        dispatch(setDataProfile({value: profile}));
-        _navigation.navigate('Main');
-      } else {
-        dispatch(postLoginFaild({errMsg: response.message}));
-      }
-    } catch (error) {
-      dispatch(postLoginFaild({errMsg: error.errMsg}));
-    }
+    //     dispatch(postLoginSuccess());
+    //     dispatch(setAuth(true));
+    //     dispatch(setDataHome({value: storeInfo}));
+    //     dispatch(setDataStoreDetails({value: storeInfo}));
+    //     dispatch(setDataEditProfile({value: profile}));
+    //     dispatch(setRole({value: profile?.role}));
+    //     dispatch(setIsCashier({value: profile?.isCashier}));
+    //     dispatch(setDataProfile({value: profile}));
+    //     _navigation.navigate('Main');
+    //   } else {
+    //     dispatch(postLoginFaild({errMsg: response.message}));
+    //   }
+    // } catch (error) {
+    //   dispatch(postLoginFaild({errMsg: error.errMsg}));
+    // }
   };
 
   const _initialValues = {

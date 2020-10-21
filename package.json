@@ -57,7 +57,8 @@
     "validator": "^13.1.1",
     "yup": "^0.29.1",
     "react-native-keyboard-aware-scroll-view": "0.9.2",
-    "apisauce": "^1.1.1"
+    "apisauce": "^1.1.1",
+    "react-native-fast-image": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
