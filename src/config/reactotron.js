@@ -1,7 +1,7 @@
 import Reactotron from 'reactotron-react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const host = '192.168.0.107'
+const host = '172.16.0.176'
 
 Reactotron.useReactNative()
 .configure({host})

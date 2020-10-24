@@ -30,11 +30,11 @@ const useTodo = () => {
   });
 
   const _onSubmitSuccess = async (values) => {
-    reactotron.log("values", values);
-    navigate('Login');
     dispatch(checkCheckdomainLoading());
     try {
       const response = await checkCheckdomain(values.domainAddress);
+      reactotron.log("response: ",response.status)
+      // reactotron.log(isTwoStringEqual(response.status, 'success'))
       if (isTwoStringEqual(response.status, 'success')) {
         dispatch(setDomainAddress(values.domainAddress));
         dispatch(checkCheckdomainSuccess());
