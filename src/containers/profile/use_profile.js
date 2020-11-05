@@ -2,6 +2,7 @@ import React from 'react';
 import {} from './with_profile';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import reactotron from 'reactotron-react-native';
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.profile);
   const appState = useSelector((rootReducer) => rootReducer.app);

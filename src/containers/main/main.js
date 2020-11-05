@@ -4,6 +4,8 @@ import React from 'react';
 import { Image } from 'react-native';
 import Home from '../home/home';
 import styles from './style';
+import profile from '../../assets/icon/profile/profile.png';
+import Profile from '../profile/profile';
 const Tab = createBottomTabNavigator();
 
 const tintColor = '#1792e6';
@@ -30,6 +32,25 @@ const Main = ({ route }) => {
                             />
                         ),
                         tabBarLabel: isFocused() ? 'Trang Chủ' : 'Trang Chủ',
+                    };
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                initialParams={route}
+                component={Profile}
+                options={({ navigation: { isFocused } }) => {
+                    return {
+                        tabBarIcon: ({ color }) => (
+                            <Image
+                                source={profile}
+                                style={[
+                                    { tintColor: isFocused() ? tintColor : color },
+                                    styles.image0,
+                                ]}
+                            />
+                        ),
+                        tabBarLabel: isFocused() ? 'Người Dùng' : 'Người Dùng',
                     };
                 }}
             />

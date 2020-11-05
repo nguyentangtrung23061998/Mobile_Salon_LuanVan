@@ -25,13 +25,11 @@ import {
   setCanShowCamera,
   resetData,
 } from './with_store_info';
-import {useTranslation} from 'react-i18next';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.storeInfo);
   const dispatch = useDispatch();
   const netInfo = useNetInfo();
-  const {t} = useTranslation();
 
   const navigation = useNavigation();
 
@@ -163,7 +161,6 @@ const useTodo = () => {
 
   return {
     state,
-    t,
     updateInputValidEvent,
     onUpdateStoreEvent,
     dispatch,

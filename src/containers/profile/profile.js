@@ -7,9 +7,9 @@ import arrowRightGray from '../../assets/icon/arrow_right_gray/arrow_right_gray.
 import changePassword from '../../assets/icon/change_password/change_password.png';
 import logOut from '../../assets/icon/log_out/log_out.png';
 import userInfo from '../../assets/icon/user_info/user_info.png';
-import {MTPImage0} from '../../component/mtp_image/index';
-import {MANAGER_ROLE} from '../../constant/app';
-import {setAuth} from '../../reducer/app';
+import {MTPImage0} from '../mtp_image/index';
+import {MANAGER_ROLE} from '../../constants/app';
+import {setAuth} from '../../reducers/app';
 import Button from './component/button/button';
 import styles from './style';
 import useProfileAccount from './use_profile';
@@ -19,6 +19,7 @@ const ProfileAccount = () => {
   const clearLocalData = async () => {
     await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('storeInfo');
+    onNavigateEvent("Intro");
   };
 
   // mysub

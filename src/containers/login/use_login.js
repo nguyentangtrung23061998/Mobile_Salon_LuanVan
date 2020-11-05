@@ -73,16 +73,24 @@ const useTodo = () => {
     password: '',
   };
 
+  // const _validation = yup.object().shape({
+  //   mobile: yup.string().required('Nhập số điện thoại'),
+  //   password: yup
+  //     .string()
+  //     .min(PASSWORD_MIN_LENGTH, 'Mật khẩu từ 8 đến 32 kí tự')
+  //     .required('Nhập mật khẩu')
+  //     .matches(
+  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+  //       'Mật khẩu phải chứa chữ hoa, chữ thường và số',
+  //     ),
+  // });
+
   const _validation = yup.object().shape({
     mobile: yup.string().required('Nhập số điện thoại'),
     password: yup
       .string()
-      .min(PASSWORD_MIN_LENGTH, 'Mật khẩu từ 8 đến 32 kí tự')
       .required('Nhập mật khẩu')
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-        'Mật khẩu phải chứa chữ hoa, chữ thường và số',
-      ),
+     
   });
 
   const form = useFormik({

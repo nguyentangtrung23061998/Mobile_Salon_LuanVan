@@ -9,13 +9,13 @@ import reactotron from 'reactotron-react-native';
 import * as yup from 'yup';
 import back from '../../assets/icon/back/back.png';
 import camera from '../../assets/icon/camera/camera.png';
-import ErrorPopUp from '../../component/error_pop_up/error_pop_up';
-import Input, {InputMask} from '../../component/input/input';
-import Loading from '../../component/loading/loading';
-import {MTPImage0} from '../../component/mtp_image';
-import {MyScrollView0} from '../../component/my_scroll_view/my_scroll_view';
-import SuccessPopUp from '../../component/success_pop_up/success_pop_up';
-import TimePicker from '../../component/time_picker/time_picker';
+import ErrorPopUp from '../error_pop_up/error_pop_up';
+import Input, {InputMask} from '../input/input';
+import Loading from '../loading/loading';
+import {MTPImage0} from '../mtp_image';
+import {MyScrollView0} from '../my_scroll_view/my_scroll_view';
+import SuccessPopUp from '../success_pop_up/success_pop_up';
+import TimePicker from '../time_picker/time_picker';
 import {inputHhmm} from '../../utility/input';
 import {noSpaceAtAll, noSpaceAtEntry} from '../../utility/string';
 import CameraPopUp from './component/cameraPopUp/camera_pop_up';
@@ -25,7 +25,6 @@ export default React.memo(() => {
   // hook
   const {
     state,
-    t,
     onGoBackEvent,
     updateInputValidEvent,
     onUpdateStoreEvent,
@@ -80,7 +79,7 @@ export default React.memo(() => {
   );
 
   const _centerComponent = useCallback(
-    () => <Text style={styles.text0}>{t('text1')}</Text>,
+    () => <Text style={styles.text0}>Quay lại</Text>,
     [],
   );
 
@@ -214,8 +213,8 @@ export default React.memo(() => {
     image: '',
   };
   const _validation = yup.object().shape({
-    name: yup.string().required(t('text12')),
-    domainAddress: yup.string().required(t('text13')),
+    name: yup.string().required('Nhập tên cửa hàng'),
+    domainAddress: yup.string().required('Nhập tên miền địa chỉ'),
   });
   const _onSubmitSuccess = async (values) => {
     onUpdateStoreEvent();
@@ -227,7 +226,7 @@ export default React.memo(() => {
   });
 
   const {handleBlur, handleSubmit, setFieldValue, errors} = form;
-
+  let url =""
   // main
   return (
     <Container>
@@ -245,7 +244,7 @@ export default React.memo(() => {
             inputContainerStyle={[styles.input4]}
             placeholderTextColor={'#000'}
             maxLength={50}
-            title={t('text14')}
+            title='Tên cửa hàng'
             required
             titleStyle={[styles.input0]}
             containerStyle={[styles.input2]}
@@ -271,7 +270,7 @@ export default React.memo(() => {
             inputContainerStyle={[styles.input4]}
             placeholderTextColor={'#000'}
             maxLength={70}
-            title={t('text15')}
+            title='Tên miền địa chỉ'
             required
             titleStyle={[styles.input3]}
             containerStyle={[styles.input2]}
@@ -300,7 +299,7 @@ export default React.memo(() => {
             inputContainerStyle={[styles.input4]}
             keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
             placeholderTextColor={'#000'}
-            title={t('text16')}
+            title='Số lượng nhân viên'
             titleStyle={[styles.input3]}
             containerStyle={[styles.input2]}
             onBlur={handleBlur('numberEmployee')}
@@ -322,7 +321,7 @@ export default React.memo(() => {
             keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
             maxLength={12}
             placeholderTextColor={'#000'}
-            title={t('text17')}
+            title='Số điện thoại'
             titleStyle={[styles.input3]}
             containerStyle={[styles.input2]}
             onBlur={handleBlur('mobile')}
@@ -341,7 +340,7 @@ export default React.memo(() => {
             inputContainerStyle={[styles.input4]}
             maxLength={70}
             placeholderTextColor={'#000'}
-            title={t('text23')}
+            title='Địa chỉ'
             titleStyle={[styles.input3]}
             containerStyle={[styles.input2]}
             onBlur={handleBlur('address')}
@@ -367,7 +366,7 @@ export default React.memo(() => {
                   type={'datetime'}
                   options={{format: 'HH:mm'}}
                   inputContainerStyle={[styles.input4]}
-                  title={t('text18')}
+                  title='Giờ mở cửa'
                   titleStyle={[styles.input3]}
                   onBlur={handleBlur('openTime')}
                   onFocus={() => updateInputValidEvent('openTime', true)}
@@ -393,7 +392,7 @@ export default React.memo(() => {
                   type={'datetime'}
                   options={{format: 'HH:mm'}}
                   inputContainerStyle={[styles.input4]}
-                  title={t('text19')}
+                  title='Giờ đóng cửa'
                   titleStyle={[styles.input3]}
                   onBlur={handleBlur('closeTime')}
                   onFocus={() => updateInputValidEvent('closeTime', true)}
@@ -419,14 +418,14 @@ export default React.memo(() => {
           end: {x: 0, y: 0},
         }}
         containerStyle={[styles.myButton0]}
-        title={t('text20')}
+        title='LƯU'
         onPress={handleSubmit}
       />
       <CameraPopUp isVisible={state?.canShowCamera} onPress={_onPressCamera} />
 
       <TimePicker
         isVisible={canShowOpenTimePicker}
-        titleText={t('text18')}
+        titleText='Giờ mở cửa'
         time={pickerOpenTime}
         onTimeChange={onSetPickerOpenTimeEvent}
         onPressConfirm={() => {
@@ -440,7 +439,7 @@ export default React.memo(() => {
       />
       <TimePicker
         isVisible={canShowCloseTimePicker}
-        titleText={t('text19')}
+        titleText='Giờ đóng cửa'
         time={pickerCloseTime}
         onTimeChange={onSetPickerCloseTimeEvent}
         onPressConfirm={() => {
@@ -454,14 +453,14 @@ export default React.memo(() => {
       {state?.errorMessage && (
         <ErrorPopUp
           msg={state?.errorMessage}
-          buttonText={t('text21')}
+          buttonText='Quay lại'
           onPress={() => onSetErrorMessageEvent(undefined)}
         />
       )}
       {state?.successMessage && (
         <SuccessPopUp
           msg={state?.successMessage}
-          buttonText={t('text22')}
+          buttonText='Xác nhận'
           onPress={() => {
             onSetSuccessMessageEvent(undefined);
             onGoBackEvent();
