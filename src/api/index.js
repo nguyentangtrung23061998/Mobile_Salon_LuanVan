@@ -23,6 +23,7 @@ import { checkCheckdomainUrl,
           getAllCustomersUrl,
           createCustomerUrl,
           updateCustomerUrl,
+          deleteEmployeeUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {

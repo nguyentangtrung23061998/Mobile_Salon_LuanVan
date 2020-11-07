@@ -26,3 +26,4 @@ export const createCustomerUrl = '/users/customerRegister';
 export const updateCustomerUrl = '/users/updateCustomer/';
 
 export const getAllEmployeesUrl = '/users/employee';
+export const deleteEmployeeUrl = '/users/';
