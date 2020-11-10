@@ -82,17 +82,15 @@ export default StyleSheet.create({
     lineHeight: 25,
     paddingTop: 20,
   },
-  view00: {
-    paddingHorizontal: 20,
-  },
+
   view8: {
     flexDirection: 'row',
   },
   view9: {
-    width: '47,5%',
+    width: '47.5%',
   },
   view10: {
-    width: '47,5%',
+    width: '47.5%',
     position: 'absolute',
     right: 0,
   },
@@ -149,5 +147,10 @@ export default StyleSheet.create({
     fontSize: 17,
     lineHeight: 21,
     textAlign: 'center',
+  },
+
+  myScrollView00: {
+    paddingHorizontal: 25,
+    flexGrow: 1,
   },
 });

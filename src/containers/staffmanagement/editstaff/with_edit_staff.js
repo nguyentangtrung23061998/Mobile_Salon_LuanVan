@@ -1,4 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
+import reactotron from 'reactotron-react-native';
+import moment from 'moment';
 
 const initialState = {
   isSubmitting: false,
@@ -27,14 +29,28 @@ const initialState = {
   data: undefined,
   isShowPopupSuccess: undefined,
   canShowCamera: false,
+  canShowDatePicker: false,
+  dateOfDatePicker: null,
 };
 
 const EditStaff = createSlice({
   name: 'EditStaff',
   initialState: initialState,
   reducers: {
+    setCanShowDatePicker: (state, action) => {
+      state.canShowDatePicker = action.payload;
+    },
     setData: (state, action) => {
-      state.data = action?.payload;
+      const data = action.payload;
+      const {yearOfBirth} = data;
+      state.data = data;
+      if (yearOfBirth === '') {
+        state.dateOfDatePicker = yearOfBirth;
+      }
+      if (yearOfBirth !== '') {
+        const date0 = moment(yearOfBirth, 'DD/MM/YYYY').format('YYYY/MM/DD');
+        state.dateOfDatePicker = date0;
+      }
     },
     updateErrorText: (state, action) => {
       state.errorText = null;
@@ -136,6 +152,21 @@ const EditStaff = createSlice({
       const {value} = action.payload;
       state.canShowCamera = value;
     },
+    setData0: (state, action) => {
+      const {value} = action.payload;
+      state.data.avatar = value;
+    },
+    setYearOfBirth: (state, action) => {
+      state.data.yearOfBirth = action.payload;
+    },
+    setPickerDate: (state, action) => {
+      const {value} = action.payload;
+      state.dateOfDatePicker = value;
+    },
+
+    setDateOfDatePicker: (state, action) => {
+      state.dateOfDatePicker = action.payload;
+    },
   },
 });
 
@@ -154,6 +185,11 @@ export const {
   onCloseSuccessPopUp,
   onCloseSuccess,
   setCanShowCamera,
+  setData0,
+  setCanShowDatePicker,
+  setPickerDate,
+  setDateOfDatePicker,
+  setYearOfBirth,
 } = actions;
 
 const reducerWrapper = (state, action) => {

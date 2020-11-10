@@ -1,26 +1,37 @@
-import React, {useCallback} from 'react';
-import {Image, Text, TouchableOpacity, View, Platform} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { useFormik } from 'formik';
+import { Container, Spinner } from 'native-base';
+import React, { useCallback } from 'react';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Button, CheckBox, Header } from 'react-native-elements';
+import * as yup from 'yup';
 import imageAdd from '../../../assets/icon/add_image/add_image.png';
 import imageChangePassword from '../../../assets/icon/change_password2/change_password2.png';
+import checkBoxOff from '../../../assets/icon/check_box_off/check_box_off.png';
+import CheckBoxOn from '../../../assets/icon/check_box_on/check_box_on.png';
+import { DatePicker } from '../../date_picker/date_picker';
 import Input from '../../input/input';
+import { MTPImage0 } from '../../mtp_image';
+import { MyScrollView0 } from '../../my_scroll_view/my_scroll_view';
+import { PrimaryButton } from '../../primary_button/primary_button';
+import SuccessPopUp from '../../success_pop_up/success_pop_up';
+import {
+  EMAIL_MAX_LENGTH,
+  FULLNAME_MAX_LENGTH,
+  HOME_TOWN_PLACE_MAX_LENGTH,
+  IDENTITY_MAX_LENGTH,
+  JOB_POSITION_MAX_LENGTH,
+  LIVING_PLACE_MAX_LENGTH,
+  PHONE_MAX_LENGTH,
+} from '../../../constants/app';
+import { numberOnly } from '../../../utility/string';
+import CameraPopUp from './component/cameraPopUp/camera_pop_up';
+import PopUp from './component/error_pop_up/error_pop_up';
 import PopUpChangePassword from './component/popUpChangePassword/changePassword';
 import styles from './style';
 import useEditStaff from './use_edit_staff';
-import {Button, CheckBox, Header} from 'react-native-elements';
-import CheckBoxOn from '../../../assets/icon/check_box_on/check_box_on.png';
-import checkBoxOff from '../../../assets/icon/check_box_off/check_box_off.png';
-import ImagePicker from 'react-native-image-picker';
-import CameraPopUp from './component/cameraPopUp/camera_pop_up';
-import * as yup from 'yup';
-import {useFormik} from 'formik';
-import {Spinner} from 'native-base';
-import LinearGradient from 'react-native-linear-gradient';
-import PopUp from './component/error_pop_up/error_pop_up';
-import SuccessPopUp from '../../success_pop_up/success_pop_up';
-import {Container} from 'native-base';
 
 export default function EditStaff() {
+  // myhook
   const {
     state,
     showPopup,
@@ -35,6 +46,11 @@ export default function EditStaff() {
     goBackEvent,
     onCloseSuccessEvent,
     onSetCanShowCameraEvent,
+    onPressSelectorPopUpEvent,
+    onSetCanShowDatePickerEvent,
+    onPressCancelDatePickerEvent,
+    onSetPickerDateEvent,
+    onPressConfirmDatePickerEvent,
   } = useEditStaff();
   const _leftComponent = useCallback(
     () => (
@@ -61,16 +77,13 @@ export default function EditStaff() {
     homeTown: state?.data?.homeTown ?? '',
     yearOfBirth: state?.data?.yearOfBirth ?? '',
     currentPlace: state?.data?.currentPlace ?? '',
-    identityCard: state?.data?.identityCard?.toString() ?? '',
+    identityCard: state?.data?.identityCard ?? '',
     mobile: state?.data?.mobile ?? '',
     email: state?.data?.email ?? '',
     avatar: state?.data?.avatar ?? '',
   };
   const validation = yup.object().shape({
-    fullname: yup
-      .string()
-      .required('Nhập tên nhân viên')
-      .min(2, 'Nhập đủ họ và tên'),
+    fullname: yup.string().required('Nhập tên nhân viên'),
     position: yup.string().required('Nhập vị trí'),
     homeTown: yup.string().nullable(),
     yearOfBirth: yup.string().nullable(),
@@ -97,125 +110,11 @@ export default function EditStaff() {
     onSubmit: onSubmitSuccess,
   });
 
-  // function
-  const _openAndroidImageLib = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      let imgUri;
-      if (response.didCancel) {
-      } else {
-        try {
-          imgUri = await response.uri;
-          form.setFieldValue('avatar', imgUri);
-        } catch (err) {}
-      }
-    });
-  };
-  const _openIosImageLib = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      let imgUri;
-      try {
-        imgUri = await response.uri;
-        imgUri = '~' + imgUri.substring(imgUri.indexOf('/Documents'));
-        form.setFieldValue('avatar', imgUri);
-      } catch (err) {}
-    });
-  };
-
-  const _openImageLibrary = () => {
-    onSetCanShowCameraEvent(false);
-    if (Platform.OS === 'android') {
-      _openAndroidImageLib();
-    } else {
-      setTimeout(() => {
-        _openIosImageLib();
-      }, 300);
-    }
-  };
-  const _openAndroidCamera = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-
-    ImagePicker.launchCamera(options, async (response) => {
-      let imgUri;
-      if (response.didCancel) {
-      } else {
-        try {
-          imgUri = await response.uri;
-          form.setFieldValue('avatar', imgUri);
-        } catch (err) {}
-      }
-    });
-  };
-  const _openIosCamera = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchCamera(options, async (response) => {
-      let imgUri;
-      try {
-        imgUri = await response.uri;
-        imgUri = '~' + imgUri.substring(imgUri.indexOf('/Documents'));
-        form.setFieldValue('avatar', imgUri);
-      } catch (err) {}
-    });
-  };
-
-  const _openCamera = () => {
-    onSetCanShowCameraEvent(false);
-    if (Platform.OS === 'android') {
-      _openAndroidCamera();
-    } else {
-      setTimeout(() => {
-        _openIosCamera();
-      }, 300);
-    }
-  };
-
-  const _onPressCamera = (type) => {
-    switch (type) {
-      case 'cancel':
-        onSetCanShowCameraEvent(false);
-        break;
-      case 'library':
-        _openImageLibrary();
-        break;
-      case 'camera':
-        _openCamera();
-        break;
-    }
-  };
-
   const _renderForm = () => {
     return (
-      <View style={styles.view00}>
+      <>
         <Input
+          maxLength={FULLNAME_MAX_LENGTH}
           title={'Họ tên nhân viên: '}
           required
           borderBottomColor={state.isFullNameFocused ? '#0077be' : '#d0d0d0'}
@@ -237,6 +136,7 @@ export default function EditStaff() {
         />
         <View style={styles.view5} />
         <Input
+          maxLength={JOB_POSITION_MAX_LENGTH}
           title={'Vị trí: '}
           required
           borderBottomColor={state.isPositionFocused ? '#0077be' : '#d0d0d0'}
@@ -274,8 +174,8 @@ export default function EditStaff() {
         </View>
         <View style={styles.view6} />
         <Input
+          maxLength={LIVING_PLACE_MAX_LENGTH}
           title={'Nơi ở hiện tại: '}
-          maxLength={50}
           borderBottomColor={
             state.isCurrentPlaceFocused ? '#0077be' : '#d0d0d0'
           }
@@ -297,6 +197,7 @@ export default function EditStaff() {
         />
         <View style={styles.view5} />
         <Input
+          maxLength={EMAIL_MAX_LENGTH}
           autoCapitalize="none"
           title={'Email: '}
           borderBottomColor={state.isEmailFocused ? '#0077be' : '#d0d0d0'}
@@ -318,8 +219,8 @@ export default function EditStaff() {
         <View style={styles.view8}>
           <View style={styles.view9}>
             <Input
+              maxLength={HOME_TOWN_PLACE_MAX_LENGTH}
               title={'Quê quán: '}
-              maxLength={25}
               borderBottomColor={state.isHowTownFocused ? '#0077be' : '#d0d0d0'}
               onBlur={form.handleBlur('homeTown')}
               onChangeText={(value) => {
@@ -339,48 +240,39 @@ export default function EditStaff() {
             />
           </View>
           <View style={styles.view10}>
-            <Input
-              title={'Năm sinh: '}
-              maxLength={4}
-              keyboardType={
-                Platform.OS === 'android' ? 'numeric' : 'number-pad'
-              }
-              borderBottomColor={
-                state.isYearOfBirthFocused ? '#0077be' : '#d0d0d0'
-              }
-              onBlur={form.handleBlur('yearOfBirth')}
-              onChangeText={(value) => {
-                if (value === ' ') {
-                  value = value.substr(1);
+            <TouchableOpacity onPress={() => onSetCanShowDatePickerEvent(true)}>
+              <Input
+                editable={false}
+                pointerEvents="none"
+                title={'Ngày sinh: '}
+                borderBottomColor={
+                  state.isYearOfBirthFocused ? '#0077be' : '#d0d0d0'
                 }
-                form.setFieldValue('yearOfBirth', value);
-              }}
-              value={form.values.yearOfBirth}
-              onFocus={() => updateInputValidEvent('yearOfBirth', true)}
-              onEndEditing={() => updateInputValidEvent('yearOfBirth', false)}
-              errorText={
-                state.isYearOfBirthValid || !form.errors.yearOfBirth
-                  ? null
-                  : form.errors.yearOfBirth
-              }
-            />
+                onBlur={form.handleBlur('yearOfBirth')}
+                value={state.data.yearOfBirth}
+                onFocus={() => updateInputValidEvent('yearOfBirth', true)}
+                onEndEditing={() => updateInputValidEvent('yearOfBirth', false)}
+                errorText={
+                  state.isYearOfBirthValid || !form.errors.yearOfBirth
+                    ? null
+                    : form.errors.yearOfBirth
+                }
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.view5} />
         <Input
-          title={'Căn cước/ CNMD: '}
-          maxLength={12}
+          maxLength={IDENTITY_MAX_LENGTH}
+          title={'Căn cước/ CMND: '}
           keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
           borderBottomColor={
             state.isIdentityCardFocused ? '#0077be' : '#d0d0d0'
           }
           onBlur={form.handleBlur('identityCard')}
-          onChangeText={(value) => {
-            if (value === ' ') {
-              value = value.substr(1);
-            }
-            form.setFieldValue('identityCard', value);
-          }}
+          onChangeText={(value) =>
+            form.setFieldValue('identityCard', numberOnly(value))
+          }
           value={form.values.identityCard}
           onFocus={() => updateInputValidEvent('identityCard', true)}
           onEndEditing={() => updateInputValidEvent('identityCard', false)}
@@ -394,15 +286,12 @@ export default function EditStaff() {
         <Input
           title={'Điện thoại: '}
           required
-          maxLength={12}
+          maxLength={PHONE_MAX_LENGTH}
           keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
           borderBottomColor={state.isMobileFocused ? '#0077be' : '#d0d0d0'}
           onBlur={form.handleBlur('mobile')}
           onChangeText={(value) => {
-            if (value === ' ') {
-              value = value.substr(1);
-            }
-            form.setFieldValue('mobile', value);
+            form.setFieldValue('mobile', numberOnly(value));
           }}
           value={form.values.mobile}
           onFocus={() => updateInputValidEvent('mobile', true)}
@@ -425,26 +314,11 @@ export default function EditStaff() {
           />
         </View>
         <View style={styles.view6} />
-        <Button
-          title="LƯU CHỈNH SỬA"
-          buttonStyle={styles.mybutton1}
-          titleStyle={styles.text4}
-          disabled={!disableButton()}
-          onPress={form.handleSubmit}
-          ViewComponent={LinearGradient}
-          linearGradientProps={{
-            colors: [
-              disableButton() ? '#4db1e9' : '#c1c1c1',
-              disableButton() ? '#005eff' : '#c1c1c1',
-            ],
-            start: {x: 0, y: 1},
-            end: {x: 0, y: 0},
-          }}
-        />
-      </View>
+      </>
     );
   };
 
+  // mymain
   return (
     <Container style={styles.view0}>
       <Header
@@ -452,16 +326,11 @@ export default function EditStaff() {
         centerComponent={_centerComponent}
         containerStyle={[styles.header0]}
       />
-      <KeyboardAwareScrollView style={styles.keyboardAwareScrollView0}>
+      <MyScrollView0 contentContainerStyle={styles.myScrollView00}>
         <View style={styles.view1}>
           <View style={styles.view2}>
             <View style={styles.view3}>
-              {/* {form?.values?.avatar !== '' && (
-                <Image
-                  style={styles.view3}
-                  source={{uri: form?.values?.avatar}}
-                />
-              )} */}
+              <MTPImage0 source={state?.data?.avatar} style={[styles.view3]} />
               <View style={styles.view4}>
                 <TouchableOpacity
                   onPress={() => {
@@ -476,7 +345,14 @@ export default function EditStaff() {
           </View>
         </View>
         {_renderForm()}
-      </KeyboardAwareScrollView>
+        <View style={{ flex: 1 }}></View>
+        <PrimaryButton
+          title="CẬP NHẬT"
+          disabled={!disableButton()}
+          onPress={form.handleSubmit}
+          containerStyle={{ marginVertical: 35 }}
+        />
+      </MyScrollView0>
       {state?.isSubmitting && (
         <View style={[styles.view14]}>
           <Spinner color="#fff" />
@@ -484,11 +360,11 @@ export default function EditStaff() {
       )}
       {state.isShowPopupSuccess && (
         <SuccessPopUp
-          msg={'Chỉnh sửa thành công'}
+          msg={'Cập nhật thành công'}
           buttonText={'Xác nhận'}
           onPress={() => {
             onCloseSuccessPopUpEvent();
-            navigation.navigate('ListStaff');
+            navigation.navigate('StaffInfo');
           }}
         />
       )}
@@ -517,7 +393,21 @@ export default function EditStaff() {
           }}
         />
       )}
-      <CameraPopUp isVisible={state.canShowCamera} onPress={_onPressCamera} />
+      <CameraPopUp
+        isVisible={state.canShowCamera}
+        onPress={onPressSelectorPopUpEvent}
+      />
+      <DatePicker
+        minimumDate={new Date('1800-01-01')}
+        maximumDate={new Date()}
+        isVisible={state.canShowDatePicker}
+        date={
+          state.dateOfDatePicker === '' ? '1995/08/16' : state.dateOfDatePicker
+        }
+        onPressContainer={onPressCancelDatePickerEvent}
+        onDateChange={(val) => onSetPickerDateEvent(val)}
+        onConfirm={(date) => onPressConfirmDatePickerEvent(date)}
+      />
     </Container>
   );
 }

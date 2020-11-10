@@ -9,8 +9,9 @@ import {
   resetState,
 } from './with_list_staff';
 import {useDispatch, useSelector} from 'react-redux';
-import {setData} from '../staffinfo/with_staff_info';
+// import {setData} from '../staffinfo/with_staff_info';
 import {resetCreateStaff} from '../createstaff/with_create_staff';
+import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const useTodo = () => {
     }
   };
   const onSetDataEvent = (dt) => {
-    dispatch(setData(dt));
+    // dispatch(setData(dt));
   };
 
   const onCloseErrorPopUpEvent = () => {

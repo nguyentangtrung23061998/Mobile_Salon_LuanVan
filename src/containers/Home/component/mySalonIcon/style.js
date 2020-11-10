@@ -2,9 +2,10 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   view0: {
+    paddingVertical: 5,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     backgroundColor: '#fff',
     shadowColor: '#00000029',
     shadowOpacity: 1,
@@ -14,9 +15,7 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     elevation: 3,
-    paddingVertical: 45,
-    paddingHorizontal: 20,
-    marginTop: 15,
+    borderRadius: 8,
   },
   view1: {width: '47%', aspectRatio: 1 / 1},
   view2: {

@@ -24,6 +24,9 @@ export const changePasswordUrl = '/users/changePassword';
 export const getAllCustomersUrl = '/users/customer';
 export const createCustomerUrl = '/users/customerRegister';
 export const updateCustomerUrl = '/users/updateCustomer/';
+export const deleteCustomerUrl = '/users/';
 
 export const getAllEmployeesUrl = '/users/employee';
 export const deleteEmployeeUrl = '/users/';
+
+export const getAllOrderUrl = '/orders/user/';

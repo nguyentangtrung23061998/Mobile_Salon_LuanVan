@@ -11,6 +11,11 @@ import ListStaff from '../containers/staffmanagement/liststaff/liststaff';
 import CreateStaff from '../containers/staffmanagement/createstaff/createstaff';
 import StaffInfo from '../containers/staffmanagement/staffinfo/staffinfo';
 import EditStaff from '../containers/staffmanagement/editstaff/editstaff';
+import ListCustomer from '../containers/customermanagement/listcustomer/listcustomer';
+import CreateCustomer from '../containers/customermanagement/createcustomer/createcustomer';
+import CustomerInfo from '../containers/customermanagement/customerinfo/customerinfo';
+import EditCustomer from '../containers/customermanagement/editcustomer/editcustomer';
+// import CustomerList from '../containers/customer_list/customer_list';
 const Stack = createStackNavigator();
 
 export default AppStack = () => {
@@ -27,6 +32,11 @@ export default AppStack = () => {
       <Stack.Screen component={CreateStaff} name="CreateStaff" />
       <Stack.Screen component={StaffInfo} name="StaffInfo" />
       <Stack.Screen component={EditStaff} name="EditStaff" />
+      <Stack.Screen component={ListCustomer} name="ListCustomer" />
+      <Stack.Screen component={CreateCustomer} name="CreateCustomer" />
+      <Stack.Screen component={CustomerInfo} name="CustomerInfo" />
+      <Stack.Screen component={EditCustomer} name="EditCustomer" />
+      {/* <Stack.Screen component={CustomerList} name="CustomerList" /> */}
     </Stack.Navigator>
   );
 };

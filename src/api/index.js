@@ -23,7 +23,9 @@ import { checkCheckdomainUrl,
           getAllCustomersUrl,
           createCustomerUrl,
           updateCustomerUrl,
-          deleteEmployeeUrl
+          deleteEmployeeUrl,
+          deleteCustomerUrl,
+          getAllOrderUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -115,6 +117,7 @@ export const getUser = () => {
 export const deleteEmployee = (id) => {
   return deleteAPI(deleteEmployeeUrl + id);
 };
+
 export const updateStaff = (id, formData) => {
   return putAPI(updateStaffUrl + id, formData, {
     headers: {
@@ -123,6 +126,43 @@ export const updateStaff = (id, formData) => {
     },
   });
 };
+
 export const getAllEmployees = () => {
   return getAPI(getAllEmployeesUrl);
+};
+
+export const getAllCustomers = (pageNumber) => {
+  return getAPI(
+    getAllCustomersUrl,
+    {},
+    {
+      params: {
+        pageNumber,
+      },
+    },
+  );
+};
+
+export const createCustomer = (formData) => {
+  return postAPI(createCustomerUrl, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'multipart/form-data',
+    },
+  });
+};
+export const updateCustomer = (id, formData) => {
+  return putAPI(updateCustomerUrl + id, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'multipart/form-data',
+    },
+  });
+};
+export const deleteCustomer = (id) => {
+  return deleteAPI(deleteCustomerUrl + id);
+};
+
+export const getAllOrder = (idCustomer) => {
+  return getAPI(getAllOrderUrl + idCustomer);
 };

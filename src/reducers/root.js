@@ -12,6 +12,11 @@ import listStaffReducer from '../containers/staffmanagement/liststaff/with_list_
 import createStaffReducer from '../containers/staffmanagement/createstaff/with_create_staff';
 import staffInfoReducer from '../containers/staffmanagement/staffinfo/with_staff_info';
 import editStaffReducer from '../containers/staffmanagement/editstaff/with_edit_staff';
+import listCustomerReducer from '../containers/customermanagement/listcustomer/with_list_customer';
+import editCustomerReducer from '../containers/customermanagement/editcustomer/with_edit_customer';
+import infoCustomerReducer from '../containers/customermanagement/customerinfo/with_customer_info';
+import createCustomerReducer from '../containers/customermanagement/createcustomer/with_create_customer';
+// import customerListReducer from '../containers/customer_list/state';
 import appReducer from './app';
 
 const rootRecuder = combineReducers({
@@ -29,6 +34,14 @@ const rootRecuder = combineReducers({
     createStaff: createStaffReducer,
     staffInfo: staffInfoReducer,
     editStaff: editStaffReducer,
+    listCustomer: listCustomerReducer,
+    editCustomer: editCustomerReducer,
+    infoCustomer: infoCustomerReducer,
+    createCustomer: createCustomerReducer,
+    listCustomer: listCustomerReducer,
+    editCustomer: editCustomerReducer,
+    infoCustomer: infoCustomerReducer,
+    // customerList:customerListReducer,
 })
 
 const rootReducerWrapper = (state, action) => {

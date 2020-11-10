@@ -1,7 +1,7 @@
 import Reactotron from 'reactotron-react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const host = '172.16.1.251'
+const host = '192.168.1.10'
 //three o'clock
 // const host = '192.168.1.13'
 

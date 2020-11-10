@@ -14,6 +14,9 @@ const StaffInfo = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
+    setDataStaffInfo: (state, action) => {
+      state.data = action.payload;
+    },
     deleteEmployeeLoading: (state, action) => {
       state.isLoading = true;
       state.isSuccess = false;
@@ -43,6 +46,7 @@ export const {
   deleteEmployeeSuccess,
   deleteEmployeeFaild,
   updateCanShowSuccess,
+  setDataStaffInfo,
   setData,
   onCloseErrorPopUp,
   onCloseSuccessPopUp,

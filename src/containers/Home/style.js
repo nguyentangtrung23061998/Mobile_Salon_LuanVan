@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 25,
     color: '#fff',
+    maxWidth: '100%',
   },
   text1: {
     fontFamily: 'Quicksand-Bold',
@@ -25,18 +26,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 16,
     color: '#09333e',
-  },
-  text3: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight: 19,
-    color: '#2f2f2f',
-  },
-  text4: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: 10,
-    lineHeight: 14,
-    color: '#868686',
   },
 
   view0: {
@@ -66,8 +55,8 @@ const styles = StyleSheet.create({
   view5: {
     flexDirection: 'row',
     marginHorizontal: 25,
-    justifyContent: 'space-between',
-    paddingBottom: 30,
+    paddingBottom: 50,
+    marginTop: 15,
   },
   view6: {height: 1, backgroundColor: '#eaeaea', marginHorizontal: 25},
   view7: {flex: 1},
@@ -81,14 +70,25 @@ const styles = StyleSheet.create({
   },
   view11: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginTop: '2%',
   },
   view12: {height: 20},
-  keyboardAwareScrollView0: {paddingTop: 270},
+  keyboardAwareScrollView0: {paddingTop: 270, flexGrow: 1, paddingBottom: 100},
+  view13: {
+    width: '2%',
+  },
 
   header0: {
     height: 0,
     marginTop: -getStatusBarHeight(),
+  },
+
+  salonIcon0: {
+    marginBottom: 25,
+  },
+
+  mTPImage0: {
+    width: '100%',
   },
 });
 

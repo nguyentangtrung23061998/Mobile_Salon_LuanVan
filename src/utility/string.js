@@ -74,5 +74,17 @@ export const getStringLength = (str) => {
   return str.length;
 };
 
-// str.trimEnd(); // xoá trailing space
-// str.trimStart(); // xoá leading space
+export const getSafeString = (str, defaultString) => {
+  if (str === undefined || str === null) {
+    return '';
+  }
+  return str + '';
+};
+
+export const numberOnly = (str) => {
+  return str.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '');
+};
+
+export const noSpaceAtStartAndEnd = (str) => {
+  return str.trimStart().trimEnd();
+};

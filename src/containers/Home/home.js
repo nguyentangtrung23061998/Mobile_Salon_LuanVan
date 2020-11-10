@@ -21,17 +21,27 @@ import MyIcon from './component/myIcon/my_icon';
 import MySalonIcon, { SalonIcon } from './component/mySalonIcon/my_salon_icon';
 import useHomeAccount from './hook';
 import styles from './style';
+import { MyScrollView0 } from '../my_scroll_view/my_scroll_view';
 
-const Home = () => {
-  const { state, onNavigateEvent } = useHomeAccount();
+export default React.memo(() => {
+  // myhook
+  const { state, role, isCashier, onNavigateEvent } = useHomeAccount();
 
-  // subs
+  // myfunction
+  const _handleStoreName = () => {
+    if (state?.data?.name?.length >= 28) {
+      return getStringFromIndexRange(state?.data?.name, 0, 27) + '...';
+    }
+    return state?.data?.name;
+  };
+
+  // mysub
   const _renderHeader = () => (
     <View style={[styles.view9]}>
-      <MTPImage0 source={homeBackground} resizeMode="contain" />
+      <MTPImage0 source={homeBackground} style={styles.mTPImage0} />
       <View style={[styles.view0]}>
         <MTPImage0 source={salozoText} style={[styles.image0]} />
-        <Text style={[styles.text0]}>{state?.data?.name}</Text>
+        <Text style={[styles.text0]}>{_handleStoreName()}</Text>
       </View>
     </View>
   );
@@ -84,6 +94,7 @@ const Home = () => {
             description='Xem danh sách, đặt lịch hẹn'
             onPress={() => onNavigateEvent('AppointmentList')}
           />
+          <View style={styles.view13} />
           <MySalonIcon
             imageSource={order}
             title='Đơn hàng'
@@ -93,76 +104,76 @@ const Home = () => {
         </View>
       </View>
     );
-
   };
 
-  // const _renderUIByEmployeeRole = () => {
-  //   if (role === EMPLOYEE_ROLE && !isCashier) {
-  //     return (
-  //       <View style={[styles.view10]}>
-  //         <View style={[styles.view11]}>
-  //           <SalonIcon
-  //             onPress={() => onNavigateEvent('ServiceList')}
-  //             source={home_service}
-  //             titleText='Dịch vụ'
-  //             descriptionText='Quản lý các dịch vụ của salon'
-  //           />
+  const _renderUIByEmployeeRole = () => {
+    if (role === EMPLOYEE_ROLE && !isCashier) {
+      return (
+        <View style={[styles.view10]}>
+          <View style={[styles.view11]}>
+            <SalonIcon
+              onPress={() => onNavigateEvent('ServiceList')}
+              source={home_service}
+              titleText='Đơn hàng'
+              descriptionText='Quản lý các dịch vụ của salon'
+            />
+            <View style={styles.view13} />
+            <SalonIcon
+              imageStyle={styles.salonIcon0}
+              source={calendar}
+              onPress={() => onNavigateEvent('AppointmentList')}
+              titleText='Lịch hẹn'
+              descriptionText='Xem danh sách, đặt lịch hẹn'
+            />
+          </View>
+        </View>
+      );
+    }
+  };
 
-  //           <SalonIcon
-  //             source={calendar}
-  //             onPress={() => onNavigateEvent('AppointmentList')}
-  //             titleText='Dịch vụ'
-  //             descriptionText='Xem danh sách, đặt lịch hẹn'
-  //           />
-  //         </View>
-  //       </View>
-  //     );
-  //   }
-  // };
+  const _renderUIByCashierRole = () => {
+    if (role === EMPLOYEE_ROLE && isCashier) {
+      return (
+        <View style={[styles.view10]}>
+          <View style={[styles.view11]}>
+            <SalonIcon
+              onPress={() => onNavigateEvent('ServiceList')}
+              source={home_service}
+              titleText='Dịch vụ'
+              descriptionText='Quản lý các dịch vụ của salon'
+            />
+            <View style={styles.view13} />
 
-  // const _renderUIByCashierRole = () => {
-  //   if (role === EMPLOYEE_ROLE && isCashier) {
-  //     return (
-  //       <View style={[styles.view10]}>
-  //         <View style={[styles.view11]}>
-  //           <SalonIcon
-  //             onPress={() => onNavigateEvent('ServiceList')}
-  //             source={home_service}
-  //             titleText='Dịch vụ'
-  //             descriptionText='Quản lý các dịch vụ của salon'
-  //           />
-  //           <SalonIcon
-  //             source={home_order}
-  //             onPress={() => onNavigateEvent('Order')}
-  //             titleText='Đơn hàng'
-  //             descriptionText='Tạo đơn hàng, thanh toán'
-  //           />
-  //         </View>
-  //         <View style={[styles.view12]} />
-  //         <View>
-  //           <SalonIcon
-  //             source={calendar}
-  //             onPress={() => onNavigateEvent('AppointmentList')}
-  //             titleText='Lịch hẹn'
-  //             descriptionText='Xem danh sách, đặt lịch hẹn'
-  //           />
-  //         </View>
-  //       </View>
-  //     );
-  //   }
-  // };
+            <SalonIcon
+              source={home_order}
+              onPress={() => onNavigateEvent('Order')}
+              titleText='Đơn hàng'
+              descriptionText='Tạo đơn hàng, thanh toán'
+            />
+          </View>
+          <View style={[styles.view11]} />
+          <View>
+            <SalonIcon
+              source={calendar}
+              onPress={() => onNavigateEvent('AppointmentList')}
+              titleText='Lịch hẹn'
+              descriptionText='Xem danh sách, đặt lịch hẹn'
+            />
+          </View>
+        </View>
+      );
+    }
+  };
 
   const _renderBody = () => (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[styles.keyboardAwareScrollView0]}
-      showsVerticalScrollIndicator={false}>
+    <MyScrollView0 contentContainerStyle={[styles.keyboardAwareScrollView0]}>
       {_renderUIByManagerRole()}
-      {/* {_renderUIByEmployeeRole()}
-      {_renderUIByCashierRole()} */}
-    </KeyboardAwareScrollView>
+      {_renderUIByEmployeeRole()}
+      {_renderUIByCashierRole()}
+    </MyScrollView0>
   );
 
-  // main
+  // mymain
   return (
     <Container>
       <Header
@@ -176,5 +187,4 @@ const Home = () => {
       </View>
     </Container>
   );
-}
-export default Home;
+});
