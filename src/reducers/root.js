@@ -16,7 +16,14 @@ import listCustomerReducer from '../containers/customermanagement/listcustomer/w
 import editCustomerReducer from '../containers/customermanagement/editcustomer/with_edit_customer';
 import infoCustomerReducer from '../containers/customermanagement/customerinfo/with_customer_info';
 import createCustomerReducer from '../containers/customermanagement/createcustomer/with_create_customer';
-// import customerListReducer from '../containers/customer_list/state';
+import orderReducer from '../containers/order_management/order/state';
+import infoOrder from '../containers/order_management/info_order/state';
+import addcustomerReducer from '../containers/order_management/add_customer/state';
+import createOrderReducer from '../containers/order_management/create_order/state';
+import editOrder from '../containers/order_management/edit_order/state';
+import selectStyle from '../containers/select_style/state';
+import selectStyle0 from '../containers/select_style0/state';
+import customerListFromOrder from '../containers/customer_list_from_order/state';
 import appReducer from './app';
 
 const rootRecuder = combineReducers({
@@ -41,7 +48,14 @@ const rootRecuder = combineReducers({
     listCustomer: listCustomerReducer,
     editCustomer: editCustomerReducer,
     infoCustomer: infoCustomerReducer,
-    // customerList:customerListReducer,
+    order: orderReducer,
+    addcustomer: addcustomerReducer,
+    createOrder: createOrderReducer,
+    editOrder,
+    selectStyle,
+    selectStyle0,
+    infoOrder,
+    customerListFromOrder
 })
 
 const rootReducerWrapper = (state, action) => {

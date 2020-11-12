@@ -15,6 +15,15 @@ import ListCustomer from '../containers/customermanagement/listcustomer/listcust
 import CreateCustomer from '../containers/customermanagement/createcustomer/createcustomer';
 import CustomerInfo from '../containers/customermanagement/customerinfo/customerinfo';
 import EditCustomer from '../containers/customermanagement/editcustomer/editcustomer';
+import Order from '../containers/order_management/order/order';
+import InfoOrder from '../containers/order_management/info_order/info_order';
+import CreateOrder from '../containers/order_management/create_order/create_order';
+import AddCustomer from '../containers/order_management/add_customer/add_customer';
+import EditOrder from '../containers/order_management/edit_order/edit_order';
+import SelectStyle from '../containers/select_style/select_style';
+import CustomerListOrder from '../containers/customer_list_order/customer_list_order';
+import SelectStyle0 from '../containers/select_style0/select_style0';
+import CustomerListFromOrder from '../containers/customer_list_from_order/customer_list_from_order';
 // import CustomerList from '../containers/customer_list/customer_list';
 const Stack = createStackNavigator();
 
@@ -36,6 +45,18 @@ export default AppStack = () => {
       <Stack.Screen component={CreateCustomer} name="CreateCustomer" />
       <Stack.Screen component={CustomerInfo} name="CustomerInfo" />
       <Stack.Screen component={EditCustomer} name="EditCustomer" />
+      <Stack.Screen component={Order} name="Order" />
+      <Stack.Screen component={InfoOrder} name="InfoOrder" />
+      <Stack.Screen component={CreateOrder} name="CreateOrder" />
+      <Stack.Screen component={AddCustomer} name="AddCustomer" />
+      <Stack.Screen component={EditOrder} name="EditOrder" />
+      <Stack.Screen component={SelectStyle} name="SelectStyle" />
+      <Stack.Screen component={CustomerListOrder} name="CustomerListOrder" />
+      <Stack.Screen component={SelectStyle0} name="SelectStyle0" />
+      <Stack.Screen
+        component={CustomerListFromOrder}
+        name="CustomerListFromOrder"
+      />
       {/* <Stack.Screen component={CustomerList} name="CustomerList" /> */}
     </Stack.Navigator>
   );

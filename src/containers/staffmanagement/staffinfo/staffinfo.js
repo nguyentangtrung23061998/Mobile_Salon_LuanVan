@@ -126,6 +126,7 @@ export default function StaffInfo() {
     }
     return state.data.email;
   };
+ 
   return (
     <Container style={styles.view0}>
       <Header

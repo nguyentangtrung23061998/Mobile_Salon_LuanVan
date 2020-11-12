@@ -25,7 +25,13 @@ import { checkCheckdomainUrl,
           updateCustomerUrl,
           deleteEmployeeUrl,
           deleteCustomerUrl,
-          getAllOrderUrl
+          getAllOrderUrl,
+          finishOrderUrl,
+          updateOrderUrl,
+          cancelOnrderUrl,
+          getCustomersByPhoneUrl,
+          getOrdersByDateUrl,
+          createOrderUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -166,3 +172,55 @@ export const deleteCustomer = (id) => {
 export const getAllOrder = (idCustomer) => {
   return getAPI(getAllOrderUrl + idCustomer);
 };
+
+export const updateOrder = (orderId, customerId, services, note) => {
+  const data = {
+    userId: customerId,
+    services,
+    note,
+  };
+  return putAPI(updateOrderUrl + orderId, data);
+};
+
+export const finishOrder = (orderId) => {
+  return putAPI(finishOrderUrl + orderId);
+};
+export const cancelOnrder = (orderId) => {
+  return putAPI(cancelOnrderUrl + orderId);
+};
+
+export const getCustomersByPhone = (mobile) => {
+  return getAPI(getCustomersByPhoneUrl, {}, {params: {mobile}});
+};
+
+export const getOrdersByDate = (status, date) => {
+  return getAPI(
+    getOrdersByDateUrl,
+    {},
+    {
+      params: {
+        status,
+        date,
+      },
+    },
+  );
+};
+
+export const createOrder = (userId, services, description, total) => {
+  let data = {
+    userId,
+    description,
+    services,
+    // total,
+  };
+  return postAPI(createOrderUrl, data);
+};
+
+
+export const PROCESSING_ORDERS_PARAM = '1';
+export const COMPLETED_ORDERS_PARAM = '2';
+export const CANCALLED_ORDERS_PARAM = '3';
+
+export const PROCESSING_STATUS = 'Đang thực hiện';
+export const PAID_STATUS = 'Đã thanh toán';
+export const CANCELLED_STATUS = 'Đã hủy';

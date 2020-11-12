@@ -12,6 +12,7 @@ import {MTPImage0} from './component/mtp_image';
 import styles from './style';
 import useListStaff from './use_list_staff';
 import search from '../../../assets/icon/searchcolor/search.png';
+import reactotron from 'reactotron-react-native';
 export default React.memo(() => {
   const {
     state,
@@ -66,12 +67,13 @@ export default React.memo(() => {
             onSetDataEvent(dt.item, dt.item.id);
             onNavigateEvent('StaffInfo');
           }}
-          data={state?.data ?? []}
+          data={state.data}
         />
       </View>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.data]);
+
 
   // main
   return (

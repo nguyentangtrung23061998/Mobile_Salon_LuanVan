@@ -15,6 +15,7 @@ import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.staffInfo);
+  reactotron.log("state: "+ state.data)
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {getAllEmployeeEvent} = useListStaff();

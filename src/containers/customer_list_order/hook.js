@@ -1,28 +1,28 @@
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
-import {getAllCustomers, getCustomerByPhone} from '../../api';
+import {getAllCustomers} from '../../api';
 import {useMyNavigation} from '../../utility/navigation';
 import {areTwoStringsEqual} from '../../utility/string';
-// import useCreateAppointment from '../create_appointment/hook';
+import useCreateOrder from '../order_management/create_order/hook';
 // import {updateData} from '../update_appointment/state';
 import {
   getAllCustomersFaild,
   getAllCustomersLoading,
   getAllCustomersSuccess,
   setSelectedItem,
-  searchCustomerLoading,
-  searchCustomerSuccess,
-  searchCustomersFaild,
-  changeSearchText,
 } from './state';
+import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const {previousRouteName} = useMyNavigation();
-  const state = useSelector((rootReducer) => rootReducer.customerList);
+  const state = useSelector((rootReducer) => rootReducer.customerListOrder);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  // const {setCustomerNameEvent, setCustomerIdEvent} = useCreateAppointment();
+  const {
+    setCustomerNameEvent,
+    setCustomerIdEvent,
+    setCustomerMobileEvent,
+  } = useCreateOrder();
   const goBack = () => {
     navigation.goBack();
   };
@@ -40,37 +40,22 @@ const useTodo = () => {
         dispatch(getAllCustomersFaild());
       }
     } catch (err) {
-      dispatch(getAllCustomersFaild({errMsg: err.errMsg}));
+      dispatch(getAllCustomersFaild());
     }
   };
   const setSelectedItemEvent = (selectedItem) => {
-    if (previousRouteName === 'UpdateAppointment') {
+    if (previousRouteName === 'UpdateOrder') {
       // dispatch(updateData(selectedItem));
     } else {
-      const {customerName, idCustomer} = selectedItem;
-      // setCustomerNameEvent(customerName);
+      const {customerName, idCustomer, customerMobile} = selectedItem;
+      setCustomerNameEvent(customerName);
       setCustomerIdEvent(idCustomer);
+      setCustomerMobileEvent(customerMobile);
       dispatch(setSelectedItem(selectedItem));
     }
     goBack();
   };
-  const getCustomerByMobile = async () => {
-    dispatch(searchCustomerLoading());
-    try {
-      const response = await getCustomerByPhone();
-      if (response.status === 'success') {
-        dispatch(searchCustomerSuccess());
-      } else {
-        const message = response;
-        dispatch(searchCustomersFaild({errMsg: message}));
-      }
-    } catch (err) {
-      dispatch(searchCustomersFaild({errMsg: err.errMsg}));
-    }
-  };
-  const changeSearchTextEvent = (text) => {
-    dispatch(changeSearchText(text));
-  };
+
   return {
     state,
     navigation,
@@ -79,8 +64,6 @@ const useTodo = () => {
     getAllCustomersEvent,
     setSelectedItemEvent,
     navigate,
-    getCustomerByMobile,
-    changeSearchTextEvent,
   };
 };
 

@@ -1,4 +1,4 @@
-// export const baseURL = 'http://10.0.3.2:3002'
+// export const baseURL = 'http://10.0.3.2:3001'
 export const baseURL = 'https://app-salon-01.herokuapp.com'
 
 export const checkCheckdomainUrl = '/checkdomain';
@@ -30,3 +30,13 @@ export const getAllEmployeesUrl = '/users/employee';
 export const deleteEmployeeUrl = '/users/';
 
 export const getAllOrderUrl = '/orders/user/';
+export const updateAppointmentUrl = '/schedules/';
+export const createOrderUrl = '/orders/user';
+
+export const getCustomersByPhoneUrl = '/users/customer/find';
+export const cancelOnrderUrl = '/orders/cancel/';
+
+export const finishOrderUrl = '/orders/finish/';
+
+export const updateOrderUrl = '/orders/modify/';
+export const getOrdersByDateUrl = '/orders/find/status/date';
