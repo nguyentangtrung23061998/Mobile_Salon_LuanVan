@@ -12,19 +12,20 @@ import {
   finishOrderFaild,
   setCanShowCancelPopUp,
 } from './state';
-
-import reactotron from 'reactotron-react-native';
 import {
   setProcessingDataOrder1,
   setCancelledDataOrder0,
   setPaidDataOrder0,
 } from '../order/state';
 import {setDataEditOrder0} from '../edit_order/state';
-import {PAID_STATUS} from '../../../constants/api';
+import {PAID_STATUS, CANCELLED_STATUS} from '../../../constants/api';
+import {useState} from 'react';
+import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.infoOrder);
   const orderState = useSelector((rootReducer) => rootReducer.order);
+  const [onShowPopUpPay, setOnShowPopUpPay] = useState(false);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -39,11 +40,13 @@ const useTodo = () => {
     try {
       const response = await cancelOnrder(state.data.orderId);
       if (response.status === 'success') {
+        const data = {...state.data};
+        data.status = CANCELLED_STATUS;
         if (orderState.isProcessingOrdersCalled) {
-          dispatch(setProcessingDataOrder1({orderId: state.data.orderId}));
+          dispatch(setProcessingDataOrder1({orderId: data.orderId}));
         }
         if (orderState.isCancelledOrdersCalled) {
-          dispatch(setCancelledDataOrder0({value: state.data}));
+          dispatch(setCancelledDataOrder0({value: data}));
         }
         const {message} = response;
         dispatch(cancelOrderSuccess({message}));
@@ -106,6 +109,8 @@ const useTodo = () => {
     onFinishOrderEvent,
     onNavigateToEditOrderEvent,
     onSetCanShowCancelPopUpEvent,
+    onShowPopUpPay,
+    setOnShowPopUpPay,
   };
 };
 

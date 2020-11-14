@@ -1,22 +1,27 @@
 import {Container} from 'native-base';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {Button, Header} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import back from '../../../assets/icon/back/back.png';
 import editColor3x from '../../../assets/icon/edit/edit_color3x.png';
 import ErrorPopUp from '../../error_pop_up/error_pop_up';
 import Loading from '../../loading/loading';
 import {MTPImage0} from '../../mtp_image/index';
+import {PrimaryButton} from '../../primary_button/primary_button';
 import SuccessPopUp from '../../success_pop_up/success_pop_up';
 import {PROCESSING_STATUS} from '../../../constants/api';
 import {sumArray} from '../../../utility/array';
-import {getSafeStringValue} from '../../../utility/string';
+import {
+  getSafeStringValue,
+  getStringFromIndexRange,
+} from '../../../utility/string';
+import PopUp from './component/popup/pop_up';
 import PopUpDelete from './component/popupdelete/pop_up_delete';
 import useinfoOrder from './hook';
 import styles from './style';
+import {MyScrollView0} from '../../my_scroll_view/my_scroll_view';
 
 export default function InfoOrder() {
   // myhook
@@ -29,6 +34,8 @@ export default function InfoOrder() {
     onFinishOrderEvent,
     onNavigateToEditOrderEvent,
     onSetCanShowCancelPopUpEvent,
+    setOnShowPopUpPay,
+    onShowPopUpPay,
   } = useinfoOrder();
 
   const {
@@ -41,8 +48,19 @@ export default function InfoOrder() {
     customerName,
     mobile,
     services,
-    orderId,
   } = state.data;
+
+  const [canShowDeletePopUp, setCanShowDeletePopUp] = useState(false);
+
+  const _handleTotal = () => {
+    let total = 0;
+    state.data.services.map((el0) => {
+      el0.styles.map((el1) => {
+        total = el1.price + total;
+      });
+    });
+    return total.toLocaleString();
+  };
 
   // subs
   const renderItem = (data) => {
@@ -51,9 +69,8 @@ export default function InfoOrder() {
         <View7>
           <Text3>{getSafeStringValue(data?.item?.name, '')}</Text3>
           <Text4>
-            {sumArray(data.item.styles.map((el) => el.price)).toLocaleString(
-              'vi-VN',
-            ) + ' Đ'}
+            {sumArray(data.item.styles.map((el) => el.price)).toLocaleString() +
+              ' Đ'}
           </Text4>
         </View7>
       </View>
@@ -87,16 +104,22 @@ export default function InfoOrder() {
 
   const _rightComponent = useCallback(
     () => (
-      <TouchableOpacity onPress={() => onSetCanShowCancelPopUpEvent(true)}>
+      <TouchableOpacity onPress={() => setCanShowDeletePopUp(true)}>
         <Text numberOfLines={1} style={styles.text1}>
-          {t('t35')}
+        HỦY ĐƠN
         </Text>
       </TouchableOpacity>
     ),
     [],
   );
 
-  // main
+  const _handleCustomerName = (customerName) => {
+    if (customerName.length >= 20) {
+      return getStringFromIndexRange(customerName, 0, 19) + '...';
+    }
+    return customerName;
+  };
+  // mymain
   return (
     <Container>
       <Header
@@ -110,13 +133,19 @@ export default function InfoOrder() {
       <View style={styles.view0}>
         <View>
           <View style={styles.view1}>
-            <Text style={styles.text2}>{t('t36')}</Text>
+            <Text style={styles.text2}>
+            TẠO LÚC
+              {': '}
+            </Text>
             <Text style={styles.Text3}>
               {getSafeStringValue(timeCreated, '')}
             </Text>
           </View>
           <View style={styles.view3}>
-            <Text style={styles.text2}>{t('t37')}</Text>
+            <Text style={styles.text2}>
+            NGÀY
+              {': '}
+            </Text>
             <Text style={styles.Text3}>
               {getSafeStringValue(dateCreated, '')}
             </Text>
@@ -132,71 +161,103 @@ export default function InfoOrder() {
             <MTPImage0 source={avatar} style={styles.mtpImage00} />
           </View3>
           <View5>
-            <Text0>{getSafeStringValue(customerName, '')}</Text0>
+            <Text0>{_handleCustomerName(customerName)}</Text0>
             <Text1>{getSafeStringValue(mobile, '')}</Text1>
           </View5>
         </View1>
-        <KeyboardAwareScrollView0>
+        <MyScrollView0 contentContainerStyle={{flexGrow: 1}}>
           <View6>
-            <Text2>{t('t38')}</Text2>
+            <Text2>DỊCH VỤ'</Text2>
             <FlatList
               data={services}
               renderItem={renderItem}
               keyExtractor={_keyExtractor}
             />
             <View8 />
+            {state.data.note !== '' && (
+              <>
+                <Text style={styles.text8}>Ghi chú: </Text>
+                <Text style={styles.text7}>{state.data.note}</Text>
+              </>
+            )}
             <View9>
-              <Text5>{t('t11')}</Text5>
-              <Text6>
-                {total !== undefined && total
-                  ? total.toLocaleString('vi-VN') + ' Đ'
-                  : ''}
-              </Text6>
+              <Text5>THÀNH TIỀN</Text5>
+              <Text6>{_handleTotal()}</Text6>
             </View9>
             <View10>
               {status === PROCESSING_STATUS && (
                 <Button1
-                  title={t('t39')}
+                  title='CHỈNH SỬA ĐƠN HÀNG'
                   type="outline"
-                  icon={<Image source={editColor3x} resizeMode={'contain'} />}
+                  icon={
+                    <Image
+                      style={styles.image0}
+                      source={editColor3x}
+                      resizeMode={'contain'}
+                    />
+                  }
                   onPress={onNavigateToEditOrderEvent}
                 />
               )}
             </View10>
           </View6>
-        </KeyboardAwareScrollView0>
+          <View style={{flex: 1}}></View>
+          {status === PROCESSING_STATUS && (
+            <PrimaryButton
+              containerStyle={{marginVertical: 35, marginHorizontal: 25}}
+              title='THANH TOÁN'
+              onPress={() => {
+                setOnShowPopUpPay(true);
+              }}
+            />
+          )}
+        </MyScrollView0>
       </View0>
-      <View2>
-        {status === PROCESSING_STATUS && (
-          <Button0
-            title={t('t40')}
-            ViewComponent={LinearGradient}
-            linearGradientProps={{
-              colors: ['#4db1e9', '#005eff'],
-              start: {x: 0, y: 1},
-              end: {x: 0, y: 0},
-            }}
-            onPress={onFinishOrderEvent}
-          />
-        )}
-      </View2>
 
-      {state.canShowCancelPopUp && (
-        <PopUpDelete0
+      {onShowPopUpPay && (
+        <PopUp
           hasTopButton
           hasBottomButton
-          title={t('t41') + ' ?'}
-          topButtonTitle={t('t13')}
-          bottomButtonTitle={t('t14')}
-          onPressBottomButton={() => onSetCanShowCancelPopUpEvent(false)}
-          onPressTopButton={onCancelOrderEvent}
+          title={'Xác nhận thanh toán?'}
+          textTitleStyle={styles.text6}
+          topButtonTitle="Thanh toán"
+          bottomButtonTitle="Hủy"
+          styleTopButton={styles.view4}
+          styleBottomButton={styles.view5}
+          styleBottomTitle={styles.text5}
+          onPressBottomButton={() => {
+            setOnShowPopUpPay(false);
+          }}
+          onPressTopButton={() => {
+            setOnShowPopUpPay(false);
+            onFinishOrderEvent();
+          }}
+        />
+      )}
+
+      {canShowDeletePopUp && (
+        <PopUpDelete
+          hasTopButton
+          hasBottomButton
+          title={'Bạn chắc chắn muốn hủy đơn hàng này' + ' ?'}
+          topButtonTitle='Xác nhận'
+          bottomButtonTitle='Quay lại'
+          textTitleStyle={styles.popUpDelete0}
+          styleTopButton={styles.popUpDelete1}
+          styleBottomButton={styles.popUpDelete2}
+          styleBottomTitle={styles.popUpDelete3}
+          onPressBottomButton={() => setCanShowDeletePopUp(false)}
+          onPressTopButton={() => {
+            setCanShowDeletePopUp(false);
+            onCancelOrderEvent();
+          }}
         />
       )}
       {state.isLoading && <Loading />}
       {state.successMessage !== '' && (
         <SuccessPopUp
           msg={state.successMessage}
-          buttonText={t('t13')}
+          buttonText='Xác nhận'
           onPress={() => {
             onSetSuccessMessageEvent('');
             onGoBackEvent();
@@ -206,7 +267,7 @@ export default function InfoOrder() {
       {state.errorMessage !== '' && (
         <ErrorPopUp
           msg={state.errorMessage}
-          buttonText={t('t26')}
+          buttonText='Quay lại'
           onPress={() => {
             onSetErrorMessageEvent('');
           }}
@@ -218,27 +279,6 @@ export default function InfoOrder() {
 
 const KeyboardAwareScrollView0 = styled(KeyboardAwareScrollView).attrs({
   flex: 1,
-})``;
-const PopUpDelete0 = styled(PopUpDelete).attrs({
-  textTitleStyle: {
-    fontFamily: 'Quicksand-Bold',
-    fontSize: 18,
-    lineHeight: 22,
-    letterSpacing: -0.58,
-  },
-  styleTopButton: {
-    backgroundColor: '#ff4849',
-  },
-  styleBottomButton: {
-    backgroundColor: '#064386',
-  },
-  styleBottomTitle: {
-    fontFamily: 'Quicksand-Regular',
-    fontSize: 15,
-    color: '#ffffff',
-    lineHeight: 22,
-    letterSpacing: -0.41,
-  },
 })``;
 
 const View0 = styled(View).attrs({
@@ -354,9 +394,9 @@ const Button1 = styled(Button).attrs({
   buttonStyle: {
     height: 36,
     borderRadius: 18,
-    width: '100%',
     borderColor: '#1790e9',
     borderWidth: 1,
+    paddingHorizontal: 15,
   },
   titleStyle: {
     fontFamily: 'Quicksand-Bold',

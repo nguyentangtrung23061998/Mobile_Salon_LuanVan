@@ -54,7 +54,7 @@ const infoOrder = createSlice({
       state.isLoading = false;
       const {message} = action.payload;
       state.successMessage = message;
-      state.data.status = PAID_STATUS;
+      // state.data.status = PAID_STATUS;
     },
     finishOrderFaild: (state, action) => {
       state.isLoading = false;

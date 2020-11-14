@@ -1,14 +1,14 @@
 import plus from '../../../assets/icon/plus/plus.png';
-import { Container, Tab, Tabs } from 'native-base';
-import React, { useCallback, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import { CalendarList } from 'react-native-calendars';
-import { Button, Header } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {Container, Tab, Tabs} from 'native-base';
+import React, {useCallback, useEffect} from 'react';
+import {Text, View} from 'react-native';
+import {CalendarList} from 'react-native-calendars';
+import {Button, Header} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import arrowDown from '../../../assets/icon/arrow_down/arrow_down.png';
 import back from '../../../assets/icon/back/back.png';
-import { MTPImage0 } from '../../mtp_image';
+import {MTPImage0} from '../../mtp_image';
 import ListOderCanceled from './component/list_oder_canceled/list_oder_canceled';
 import ListOderPaid from './component/list_oder_paid/list_oder_paid';
 import ListOderProcessing from './component/list_oder_processing/list_oder_processing';
@@ -16,54 +16,55 @@ import useOder from './hook';
 import styles from './style';
 import Loading from '../../loading/loading';
 import ErrorPopUp from '../../error_pop_up/error_pop_up';
+import {PrimaryButton} from '../../primary_button/primary_button';
 
 export default React.memo(() => {
-    const {
-        state,
-        onNavigateEvent,
-        onGoBackEvent,
-        onSetIsCalendarVisibleEvent,
-        onConfirmCalendarDate,
-        onVisibleMonthsChangeEvent,
-        onResetDayMonthYearEvent,
-        onSetStatusEvent,
-        onGetProcessingOrdersEvent,
-        onResetStateEvent,
-        onPressProcessingItem,
-        onPressCancelledItem,
-        onPressPaidItemEvent,
-        onSetErrorMessageEvent,
-    } = useOder();
+  // myhook
+  const {
+    state,
+    onNavigateEvent,
+    onGoBackEvent,
+    onSetIsCalendarVisibleEvent,
+    onConfirmCalendarDate,
+    onVisibleMonthsChangeEvent,
+    onResetDayMonthYearEvent,
+    onSetStatusEvent,
+    onGetProcessingOrdersEvent,
+    onResetStateEvent,
+    onPressProcessingItem,
+    onPressCancelledItem,
+    onPressPaidItemEvent,
+    onSetErrorMessageEvent,
+  } = useOder();
 
-    // myuseeffect
-    useEffect(() => {
-        onGetProcessingOrdersEvent(state.date);
-    }, []);
+  // myuseeffect
+  useEffect(() => {
+    onGetProcessingOrdersEvent(state.date);
+  }, []);
 
-    useEffect(() => {
-        if (!state.isCalendarVisible) {
-            onResetDayMonthYearEvent();
-        }
-    }, [state.isCalendarVisible]);
+  useEffect(() => {
+    if (!state.isCalendarVisible) {
+      onResetDayMonthYearEvent();
+    }
+  }, [state.isCalendarVisible]);
 
-    // mysub
-    const _renderHeader = useCallback(() => <></>, []);
+  // mysub
+  const _renderHeader = useCallback(() => <></>, []);
 
-    const _leftComponent = useCallback(
-        () => (
-            <TouchableOpacity
-                style={styles.touchableOpacity0}
-                onPress={() => {
-                    onGoBackEvent();
-                    onResetStateEvent();
-                }}>
-                <MTPImage0 source={back} style={styles.mTPImage0} />
-            </TouchableOpacity>
-        ),
-        [],
-    );
+  const _leftComponent = useCallback(
+    () => (
+      <TouchableOpacity
+        style={styles.touchableOpacity0}
+        onPress={() => {
+          onGoBackEvent();
+          onResetStateEvent();
+        }}>
+        <MTPImage0 source={back} style={styles.mTPImage0} />
+      </TouchableOpacity>
+    ),
+    [],
+  );
 
-    
   const _renderOderProcessing = useCallback(() => {
     return (
       <Container style={styles.container0}>
@@ -170,20 +171,6 @@ export default React.memo(() => {
               </Tab>
             </Tabs>
           </View>
-          <Button
-            title='TẠO MỚI ĐƠN HÀNG'
-            icon={<MTPImage0 style={[styles.mtpImage01]} source={plus} />}
-            buttonStyle={styles.button0}
-            titleStyle={styles.button1}
-            containerStyle={styles.button2}
-            ViewComponent={LinearGradient}
-            linearGradientProps={{
-              colors: ['#4db1e9', '#005eff'],
-              start: {x: 0, y: 1},
-              end: {x: 0, y: 0},
-            }}
-            onPress={() => onNavigateEvent('CreateOrder')}
-          />
         </>
       )}
 
@@ -195,6 +182,11 @@ export default React.memo(() => {
           onPress={() => onSetErrorMessageEvent('')}
         />
       )}
+      <PrimaryButton
+        title='TẠO MỚI ĐƠN HÀNG'
+        containerStyle={styles.button2}
+        onPress={() => onNavigateEvent('CreateOrder')}
+      />
     </Container>
   );
-})
+});

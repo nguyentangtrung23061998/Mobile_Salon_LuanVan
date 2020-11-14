@@ -32,6 +32,8 @@ export default StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     color: '#000',
+    position: 'absolute',
+    right: 0,
   },
   text4: {
     fontFamily: 'Quicksand-Bold',
@@ -51,6 +53,7 @@ export default StyleSheet.create({
   view1: {
     flexDirection: 'row',
     flex: 1,
+    alignItems: 'center',
   },
   view2: {
     backgroundColor: '#1790e9',
@@ -62,7 +65,7 @@ export default StyleSheet.create({
   view3: {
     flexDirection: 'row',
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
 
   mtpImage00: {
@@ -73,5 +76,62 @@ export default StyleSheet.create({
   touchableOpacity0: {
     width: 40,
     height: 30,
+  },
+  text5: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 15,
+    color: '#ffffff',
+    lineHeight: 22,
+    letterSpacing: -0.41,
+  },
+  text6: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 18,
+    lineHeight: 22,
+    letterSpacing: -0.58,
+  },
+  text7: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 14,
+    lineHeight: 22,
+    letterSpacing: -0.58,
+  },
+  text8: {
+    marginTop: 20,
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 14,
+    lineHeight: 22,
+    letterSpacing: -0.58,
+    textDecorationLine: 'underline',
+  },
+  view4: {
+    backgroundColor: '#00c4ae',
+  },
+  view5: {
+    backgroundColor: '#064386',
+  },
+
+  image0: {
+    marginRight: 10,
+  },
+
+  popUpDelete0: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 18,
+    lineHeight: 22,
+    letterSpacing: -0.58,
+  },
+  popUpDelete1: {
+    backgroundColor: '#ff4849',
+  },
+  popUpDelete2: {
+    backgroundColor: '#064386',
+  },
+  popUpDelete3: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 15,
+    color: '#ffffff',
+    lineHeight: 22,
+    letterSpacing: -0.41,
   },
 });

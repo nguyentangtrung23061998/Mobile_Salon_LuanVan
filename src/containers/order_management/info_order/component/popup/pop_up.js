@@ -3,7 +3,8 @@ import {View, Text} from 'react-native';
 import styles from './style';
 import {Button, Overlay} from 'react-native-elements';
 import {Container} from 'native-base';
-export default function PopUpDelete({
+
+export default function PopUp({
   hasTopButton,
   hasBottomButton,
   title,
@@ -11,6 +12,7 @@ export default function PopUpDelete({
   bottomButtonTitle,
   onPressTopButton,
   onPressBottomButton,
+  isVisible,
   styleTitleTopButton,
   styleTopButton,
   styleBottomButton,
@@ -28,7 +30,6 @@ export default function PopUpDelete({
             title={topButtonTitle}
             titleStyle={[styles.button1, styleTitleTopButton]}
             buttonStyle={[styles.button0, styleTopButton]}
-            
           />
         )}
         {hasTopButton && <View style={{height: 19}}></View>}
