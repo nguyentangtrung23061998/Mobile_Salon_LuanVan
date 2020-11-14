@@ -2,6 +2,8 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {Text, TouchableHighlight, View, SectionList} from 'react-native';
 import styles from './style';
 import {MTPImage0} from '../../mtp_image/index';
+import {getStringFromIndexRange} from '../../../../../../utility/string';
+
 export default function List({data, onSelectEmployee}) {
   const [listData, setListData] = useState([]);
   const _keyExtractor = useCallback((item, index) => {
@@ -19,6 +21,19 @@ export default function List({data, onSelectEmployee}) {
       </View>
     );
   }, []);
+
+  const _handleFullName = (fullName) => {
+    if (fullName.length >= 30) {
+      return getStringFromIndexRange(fullName, 0, 29) + '...';
+    }
+    return fullName;
+  };
+  const _handlePosition = (position) => {
+    if (position.length >= 34) {
+      return getStringFromIndexRange(position, 0, 33) + '...';
+    }
+    return position;
+  };
   const renderItem = (data) => {
     const {item, index} = data;
     const {id, avatar, fullname, position, isCashier} = item;
@@ -37,10 +52,10 @@ export default function List({data, onSelectEmployee}) {
           </View>
           <View style={styles.view00} />
           <View style={[styles.view0]}>
-            <Text style={[styles.text0]}>{fullname}</Text>
+            <Text style={[styles.text0]}>{_handleFullName(fullname)}</Text>
             <View style={[styles.view1]}>
               <Text style={[styles.text1]}>
-                {position}
+                {_handlePosition(position)}
                 {isCashier ? ' - Thu ngân' : null}
               </Text>
             </View>
@@ -52,6 +67,7 @@ export default function List({data, onSelectEmployee}) {
 
   return (
     <SectionList
+      scrollIndicatorInsets={{right: 1}}
       renderItem={(rowData, rowMap) => {
         return renderItem(rowData, rowMap);
       }}
@@ -59,6 +75,7 @@ export default function List({data, onSelectEmployee}) {
       sections={listData}
       keyExtractor={_keyExtractor}
       stickySectionHeadersEnabled={false}
+      contentContainerStyle={{paddingBottom: 100}}
     />
   );
 }

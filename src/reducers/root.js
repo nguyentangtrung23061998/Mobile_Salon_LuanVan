@@ -24,6 +24,7 @@ import editOrder from '../containers/order_management/edit_order/state';
 import selectStyle from '../containers/select_style/state';
 import selectStyle0 from '../containers/select_style0/state';
 import customerListFromOrder from '../containers/customer_list_from_order/state';
+import addCustomer1 from '../containers/add_customer1/state';
 import appReducer from './app';
 
 const rootRecuder = combineReducers({
@@ -55,7 +56,8 @@ const rootRecuder = combineReducers({
     selectStyle,
     selectStyle0,
     infoOrder,
-    customerListFromOrder
+    customerListFromOrder,
+    addCustomer1
 })
 
 const rootReducerWrapper = (state, action) => {

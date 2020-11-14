@@ -1,11 +1,29 @@
-import React, {useCallback} from 'react';
-import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-const ListOderCanceled = ({data, onPress}) => {
+import {
+  getSafeStringValue,
+  getStringFromIndexRange,
+} from '../../../../../utility/string';
+const ListOderCanceled = ({ data, onPress }) => {
   const _keyExtractor = useCallback((item, index) => {
     return item + index;
   }, []);
-  const _renderItem = useCallback(({item, index}) => {
+  const _renderItem = useCallback(({ item, index }) => {
+    const { orderNumber, creator, timeCreated, total, customerName } = item;
+
+    const _handleCustomerName = (customerName) => {
+      if (customerName.length >= 30) {
+        return getStringFromIndexRange(customerName, 0, 29) + '...';
+      }
+      return customerName;
+    };
+    const _handleCreatorName = (creatorName) => {
+      if (creatorName.length >= 30) {
+        return getStringFromIndexRange(creatorName, 0, 29) + '...';
+      }
+      return creatorName;
+    };
     return (
       <TouchableOpacity onPress={() => onPress(item)}>
         <View0>
@@ -13,26 +31,24 @@ const ListOderCanceled = ({data, onPress}) => {
             <View2>
               <View4>
                 <View5>
-                  <Text0>{'#214269'}</Text0>
+                  <Text0>{orderNumber ? '#' + orderNumber : ''}</Text0>
                 </View5>
-                <Text1>
-                  {'1.400.000'} {'Đ'}
-                </Text1>
+                <Text1>{total ? total.toLocaleString() + ' Đ' : ''}</Text1>
               </View4>
             </View2>
             <View8>
-              <Text3>{'TỐNG ĐỨC LƯƠNG'}</Text3>
+              <Text3>{_handleCustomerName(customerName)}</Text3>
             </View8>
             <View3 />
             <View9>
               <View4>
                 <View6>
                   <Text2>{'Người tạo:'}</Text2>
-                  <Text2>{'Nguyễn Văn Anh'}</Text2>
+                  <Text2>{_handleCreatorName(creator)}</Text2>
                 </View6>
                 <View7>
                   <Text2>{'Bắt đầu:'}</Text2>
-                  <Text2>{'09:30'}</Text2>
+                  <Text2>{getSafeStringValue(timeCreated, '')}</Text2>
                 </View7>
               </View4>
             </View9>
@@ -46,9 +62,11 @@ const ListOderCanceled = ({data, onPress}) => {
       renderItem={_renderItem}
       data={data}
       keyExtractor={_keyExtractor}
+      contentContainerStyle={{ paddingBottom: 100 }}
     />
   );
 };
+
 
 const View0 = styled(View).attrs({
   flex: 1,

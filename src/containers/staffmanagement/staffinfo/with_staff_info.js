@@ -46,10 +46,10 @@ export const {
   deleteEmployeeSuccess,
   deleteEmployeeFaild,
   updateCanShowSuccess,
-  setDataStaffInfo,
   setData,
   onCloseErrorPopUp,
   onCloseSuccessPopUp,
+  setDataStaffInfo,
 } = actions;
 
 const reducerWrapper = (state, action) => {

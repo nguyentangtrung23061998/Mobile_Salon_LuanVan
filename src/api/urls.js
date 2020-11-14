@@ -40,3 +40,4 @@ export const finishOrderUrl = '/orders/finish/';
 
 export const updateOrderUrl = '/orders/modify/';
 export const getOrdersByDateUrl = '/orders/find/status/date';
+export const addCustomerUrl = '/users/customerRegisterWith2Fields';

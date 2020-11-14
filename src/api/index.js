@@ -31,7 +31,8 @@ import { checkCheckdomainUrl,
           cancelOnrderUrl,
           getCustomersByPhoneUrl,
           getOrdersByDateUrl,
-          createOrderUrl
+          createOrderUrl,
+          addCustomerUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -214,6 +215,10 @@ export const createOrder = (userId, services, description, total) => {
     // total,
   };
   return postAPI(createOrderUrl, data);
+};
+
+export const addCustomer = (fullname, mobile) => {
+  return postAPI(addCustomerUrl, {fullname, mobile});
 };
 
 

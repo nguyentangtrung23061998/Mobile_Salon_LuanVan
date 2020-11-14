@@ -39,7 +39,7 @@ export default StyleSheet.create({
     borderRadius: 24,
   },
   view5: {
-    marginBottom: 70,
+    // marginBottom: 70,
   },
 
   header0: {backgroundColor: '#fff'},

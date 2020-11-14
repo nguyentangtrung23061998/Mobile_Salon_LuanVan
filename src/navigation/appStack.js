@@ -24,6 +24,7 @@ import SelectStyle from '../containers/select_style/select_style';
 import CustomerListOrder from '../containers/customer_list_order/customer_list_order';
 import SelectStyle0 from '../containers/select_style0/select_style0';
 import CustomerListFromOrder from '../containers/customer_list_from_order/customer_list_from_order';
+import AddCustomer1 from '../containers/add_customer1/add_customer1';
 // import CustomerList from '../containers/customer_list/customer_list';
 const Stack = createStackNavigator();
 
@@ -57,6 +58,7 @@ export default AppStack = () => {
         component={CustomerListFromOrder}
         name="CustomerListFromOrder"
       />
+      <Stack.Screen component={AddCustomer1} name="AddCustomer1" />
       {/* <Stack.Screen component={CustomerList} name="CustomerList" /> */}
     </Stack.Navigator>
   );

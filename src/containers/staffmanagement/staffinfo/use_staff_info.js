@@ -11,11 +11,9 @@ import {sendUpdateListStaff} from '../liststaff/with_list_staff';
 import {useDispatch, useSelector} from 'react-redux';
 import {setData} from '../editstaff/with_edit_staff';
 import useListStaff from '../liststaff/use_list_staff';
-import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.staffInfo);
-  reactotron.log("state: "+ state.data)
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {getAllEmployeeEvent} = useListStaff();
@@ -31,7 +29,6 @@ const useTodo = () => {
   const deleteEmployeeEvent = async (id) => {
     dispatch(deleteEmployeeLoading());
     try {
-     
       const Response = await deleteEmployee(id);
       if (Response.status === 'success') {
         dispatch(deleteEmployeeSuccess({id}));

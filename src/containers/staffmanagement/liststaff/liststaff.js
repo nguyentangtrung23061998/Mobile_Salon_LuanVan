@@ -12,7 +12,8 @@ import {MTPImage0} from './component/mtp_image';
 import styles from './style';
 import useListStaff from './use_list_staff';
 import search from '../../../assets/icon/searchcolor/search.png';
-import reactotron from 'reactotron-react-native';
+import {PrimaryButton} from '../../primary_button/primary_button';
+
 export default React.memo(() => {
   const {
     state,
@@ -67,13 +68,12 @@ export default React.memo(() => {
             onSetDataEvent(dt.item, dt.item.id);
             onNavigateEvent('StaffInfo');
           }}
-          data={state.data}
+          data={state?.data ?? []}
         />
       </View>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.data]);
-
 
   // main
   return (
@@ -92,20 +92,11 @@ export default React.memo(() => {
       </View>
       <View style={styles.view4}>
         {state.isEnabled && (
-          <Button
-            title=" Tạo mới nhân viên"
-            icon={<MTPImage0 source={plus} />}
-            buttonStyle={styles.mybutton0}
-            titleStyle={styles.text0}
+          <PrimaryButton
+            title=" TẠO MỚI NHÂN VIÊN"
             onPress={() => {
               onResetCreateStaffEvent();
               onNavigateEvent('CreateStaff');
-            }}
-            ViewComponent={LinearGradient}
-            linearGradientProps={{
-              colors: ['#4db1e9', '#005eff'],
-              start: {x: 0, y: 1},
-              end: {x: 0, y: 0},
             }}
           />
         )}

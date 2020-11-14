@@ -13,7 +13,6 @@ import {MTPImage0} from '../liststaff/component/mtp_image';
 import back from '../../../assets/icon/back/back.png';
 import SuccessPopUp from '../../success_pop_up/success_pop_up';
 import {getStringFromIndexRange} from '../../../utility/string';
-import reactotron from 'reactotron-react-native';
 
 export default function StaffInfo() {
   const {
@@ -126,7 +125,6 @@ export default function StaffInfo() {
     }
     return state.data.email;
   };
- 
   return (
     <Container style={styles.view0}>
       <Header
@@ -189,7 +187,6 @@ export default function StaffInfo() {
           textTitleStyle={styles.text11}
           topButtonTitle="Xóa"
           bottomButtonTitle="Hủy"
-          isVisible={true}
           styleTopButton={styles.view8}
           styleBottomButton={styles.view9}
           styleBottomTitle={styles.text10}

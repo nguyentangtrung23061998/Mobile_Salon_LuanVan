@@ -125,18 +125,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  view11: {
-    position: 'absolute',
-    bottom: 25,
-    width: '90%',
-    right: 20,
-    left: 20,
-  },
+
   mybutton0: {
-    height: 40,
-    borderRadius: 20,
+    height: 48,
+    borderRadius: 24,
     borderColor: '#1792e6',
     borderWidth: 2,
+    marginHorizontal: 25,
+    marginTop: 15,
   },
   text12: {
     fontFamily: 'Nunito-Bold',
