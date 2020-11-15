@@ -25,6 +25,13 @@ import selectStyle from '../containers/select_style/state';
 import selectStyle0 from '../containers/select_style0/state';
 import customerListFromOrder from '../containers/customer_list_from_order/state';
 import addCustomer1 from '../containers/add_customer1/state';
+import appointmentReducer from '../containers/appointmentList/with_appointment_list';
+import updateAppointmentReducerWrapper from '../containers/update_appointment/state';
+import appointmentDetailReducer from '../containers/appointment_detail/state';
+import createAppointmentReducer from '../containers/create_appointment/state';
+import customerList0 from '../containers/customer_list0/state';
+import customerListOrderReducer from '../containers/customer_list/state';
+import customerListReducer from '../containers/customer_list/state';
 import appReducer from './app';
 
 const rootRecuder = combineReducers({
@@ -52,12 +59,19 @@ const rootRecuder = combineReducers({
     order: orderReducer,
     addcustomer: addcustomerReducer,
     createOrder: createOrderReducer,
+    appointment: appointmentReducer,
     editOrder,
     selectStyle,
     selectStyle0,
     infoOrder,
     customerListFromOrder,
-    addCustomer1
+    addCustomer1,
+    updateAppointment: updateAppointmentReducerWrapper,
+    appointmentDetail: appointmentDetailReducer,
+    createAppointment: createAppointmentReducer,
+    customerList0,
+    customerListOrder: customerListOrderReducer,
+    customerList: customerListReducer
 })
 
 const rootReducerWrapper = (state, action) => {

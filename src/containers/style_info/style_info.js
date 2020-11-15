@@ -1,13 +1,13 @@
-import {useNavigation} from '@react-navigation/native';
-import {Spinner} from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { Spinner } from 'native-base';
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {Button, Header} from 'react-native-elements';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Header } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import SafeAreaView from 'react-native-safe-area-view';
 import Swiper from 'react-native-swiper';
 import editStyle from '../../assets/icon/edit_style/edit_style.png';
-import {MANAGER_ROLE} from '../../constants/app';
+import { MANAGER_ROLE } from '../../constants/app';
 import useUpdateStyle from '../update_style/hook';
 import styles from './style';
 import useStyleInfoAccount from './use_style_info';
@@ -21,8 +21,8 @@ const StyleInfoAccount = () => {
     onShowPopUp,
     setonShowPopUp,
   } = useStyleInfoAccount();
-  const {styleInfoData, serviceId} = state;
-  const {sendUpdateStyleDataEvent} = useUpdateStyle();
+  const { styleInfoData, serviceId } = state;
+  const { sendUpdateStyleDataEvent } = useUpdateStyle();
 
   const _rightComponent = () => {
     if (role === MANAGER_ROLE) {
@@ -37,7 +37,7 @@ const StyleInfoAccount = () => {
     }
   };
   return (
-    <SafeAreaView forceInset={{top: 'never'}} style={[styles.safeAreaView0]}>
+    <SafeAreaView forceInset={{ top: 'never' }} style={[styles.safeAreaView0]}>
       <View style={[styles.view0]}>
         <Header
           containerStyle={[styles.header0]}
@@ -124,29 +124,46 @@ const StyleInfoAccount = () => {
           />
         )}
       </View>
-      <PopUp
-        isVisible={onShowPopUp}
-        hasTopButton
-        hasBottomButton
-        title={'Xóa kiểu dáng này?'}
-        textTitleStyle={styles.text5}
-        topButtonTitle="Xóa"
-        bottomButtonTitle="Hủy"
-        styleTopButton={styles.view3}
-        styleBottomButton={styles.view4}
-        styleBottomTitle={styles.text6}
-        onPressBottomButton={() => {
-          setonShowPopUp(false);
-        }}
-        onPressTopButton={() => {
-          deleteStyleEvent(styleInfoData, serviceId);
-          setonShowPopUp(false);
-        }}
-      />
+      {state.canShowDeleteStylePopUp && (
+        <PopUp
+          isVisible={onShowPopUp}
+          hasTopButton
+          hasBottomButton
+          title={'Xóa kiểu dáng này?'}
+          textTitleStyle={styles.text5}
+          topButtonTitle="Xóa"
+          bottomButtonTitle="Hủy"
+          styleTopButton={styles.view3}
+          styleBottomButton={styles.view4}
+          styleBottomTitle={styles.text6}
+          onPressBottomButton={() => {
+            setonShowPopUp(false);
+          }}
+          onPressTopButton={() => {
+            deleteStyleEvent(styleInfoData, serviceId);
+            setonShowPopUp(false);
+          }}
+        />
+      )}
       {state.isLoading && (
         <View style={[styles.view5]}>
           <Spinner color="#fff" />
         </View>
+      )}
+      {state.successMessage && (
+        <SuccessPopUp
+          msg={state.successMessage}
+          buttonText='Xác nhận'
+          onPress={onConfirmDeleteSuccessEvent}
+        />
+      )}
+
+      {state.errorMessage && (
+        <ErrorPopUp
+          msg={state.errorMessage}
+          buttonText='Xác nhận'
+          onPress={() => onSetErrorMessageEvent(null)}
+        />
       )}
     </SafeAreaView>
   );

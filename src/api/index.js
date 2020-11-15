@@ -32,7 +32,12 @@ import { checkCheckdomainUrl,
           getCustomersByPhoneUrl,
           getOrdersByDateUrl,
           createOrderUrl,
-          addCustomerUrl
+          addCustomerUrl,
+          getAppointmentsByDateUrl,
+          cancelAppointmentUrl,
+          confirmAppointmentSuccessUrl,
+          createAppointmentUrl,
+          updateAppointmentUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -221,6 +226,51 @@ export const addCustomer = (fullname, mobile) => {
   return postAPI(addCustomerUrl, {fullname, mobile});
 };
 
+export const getAppointmentsByDate = (date) => {
+  return getAPI(`${getAppointmentsByDateUrl}${date}`);
+};
+
+export const cancelAppointment = (id) => {
+  return putAPI(`${cancelAppointmentUrl}${id}`);
+};
+export const confirmAppointmentSuccess = (appointmentId) => {
+  return putAPI(`${confirmAppointmentSuccessUrl}${appointmentId}`);
+};
+
+export const createAppointment = (
+  idCustomer,
+  date,
+  time,
+  numberCustomer,
+  note,
+) => {
+  return postAPI(createAppointmentUrl, {
+    idCustomer,
+    date,
+    time,
+    numberCustomer,
+    note,
+  });
+};
+
+export const updateAppointment = (requestData) => {
+  let {
+    appointmentId,
+    idCustomer,
+    date,
+    time,
+    note,
+    numberCustomer,
+  } = requestData;
+  note = note && note !== '' ? note : '';
+  return putAPI(updateAppointmentUrl + appointmentId, {
+    idCustomer,
+    date,
+    time,
+    note,
+    numberCustomer,
+  });
+};
 
 export const PROCESSING_ORDERS_PARAM = '1';
 export const COMPLETED_ORDERS_PARAM = '2';
@@ -229,3 +279,6 @@ export const CANCALLED_ORDERS_PARAM = '3';
 export const PROCESSING_STATUS = 'Đang thực hiện';
 export const PAID_STATUS = 'Đã thanh toán';
 export const CANCELLED_STATUS = 'Đã hủy';
+
+
+//getAllCustomers, getCustomersByPhone

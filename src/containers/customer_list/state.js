@@ -67,10 +67,13 @@ export const {
 
 const customerListReducerWrapper = (state, action) => {
   const {type} = action;
-  if (
-    type === 'getAllCustomers/pending' ||
-    type === 'customerList/resetCustomerList'
-  ) {
+  // if (
+  //   type === 'getAllCustomers/pending' ||
+  //   type === 'customerList/resetCustomerList'
+  // ) {
+  //   state = undefined;
+  // }
+  if (action.type === 'customerList/resetState') {
     state = undefined;
   }
   return reducer(state, action);

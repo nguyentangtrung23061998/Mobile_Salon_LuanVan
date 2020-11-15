@@ -41,3 +41,8 @@ export const finishOrderUrl = '/orders/finish/';
 export const updateOrderUrl = '/orders/modify/';
 export const getOrdersByDateUrl = '/orders/find/status/date';
 export const addCustomerUrl = '/users/customerRegisterWith2Fields';
+export const getAppointmentsByDateUrl = '/schedules/search/date?date=';
+
+export const cancelAppointmentUrl = '/schedules/cancel/';
+export const createAppointmentUrl = '/schedules/';
+export const confirmAppointmentSuccessUrl = '/schedules/arrived/';

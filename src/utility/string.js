@@ -30,9 +30,7 @@ export const areTwoStringsEqual = (str0, str1) => {
 };
 
 export const getStringFromIndexRange = (str, startIndex, endIndex) => {
-  // return str.substring(startIndex, endIndex);
-  // const str =  'abcdef'
-  // getStringFromIndexRange(str,1,3) => 'bcd'
+  return str.substring(startIndex, endIndex);
 };
 
 export const isUrl = (str) => {

@@ -25,7 +25,12 @@ import CustomerListOrder from '../containers/customer_list_order/customer_list_o
 import SelectStyle0 from '../containers/select_style0/select_style0';
 import CustomerListFromOrder from '../containers/customer_list_from_order/customer_list_from_order';
 import AddCustomer1 from '../containers/add_customer1/add_customer1';
-// import CustomerList from '../containers/customer_list/customer_list';
+import AppointmentList from '../containers/appointmentList/appointment_list.js';
+import AppointmentDetail from '../containers/appointment_detail/appointment_detail';
+import UpdateAppointment from '../containers/update_appointment/update_appointment';
+import CreateAppointment from '../containers/create_appointment/create_appointment';
+import CustomerList0 from '../containers/customer_list0/customer_list0';
+import CustomerList from '../containers/customer_list/customer_list';
 const Stack = createStackNavigator();
 
 export default AppStack = () => {
@@ -59,7 +64,12 @@ export default AppStack = () => {
         name="CustomerListFromOrder"
       />
       <Stack.Screen component={AddCustomer1} name="AddCustomer1" />
-      {/* <Stack.Screen component={CustomerList} name="CustomerList" /> */}
+      <Stack.Screen component={AppointmentList} name="AppointmentList" />
+      <Stack.Screen component={AppointmentDetail} name="AppointmentDetail" />
+      <Stack.Screen component={UpdateAppointment} name="UpdateAppointment" />
+      <Stack.Screen component={CreateAppointment} name="CreateAppointment" />
+      <Stack.Screen component={CustomerList0} name="CustomerList0" />
+      <Stack.Screen component={CustomerList} name="CustomerList" />
     </Stack.Navigator>
   );
 };

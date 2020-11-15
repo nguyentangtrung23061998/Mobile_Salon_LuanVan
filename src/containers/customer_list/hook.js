@@ -4,8 +4,8 @@ import reactotron from 'reactotron-react-native';
 import {getAllCustomers, getCustomerByPhone} from '../../api';
 import {useMyNavigation} from '../../utility/navigation';
 import {areTwoStringsEqual} from '../../utility/string';
-// import useCreateAppointment from '../create_appointment/hook';
-// import {updateData} from '../update_appointment/state';
+import useCreateAppointment from '../create_appointment/hook';
+import {updateData} from '../update_appointment/state';
 import {
   getAllCustomersFaild,
   getAllCustomersLoading,
@@ -22,7 +22,7 @@ const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.customerList);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  // const {setCustomerNameEvent, setCustomerIdEvent} = useCreateAppointment();
+  const {setCustomerNameEvent, setCustomerIdEvent} = useCreateAppointment();
   const goBack = () => {
     navigation.goBack();
   };
@@ -45,10 +45,10 @@ const useTodo = () => {
   };
   const setSelectedItemEvent = (selectedItem) => {
     if (previousRouteName === 'UpdateAppointment') {
-      // dispatch(updateData(selectedItem));
+      dispatch(updateData(selectedItem));
     } else {
       const {customerName, idCustomer} = selectedItem;
-      // setCustomerNameEvent(customerName);
+      setCustomerNameEvent(customerName);
       setCustomerIdEvent(idCustomer);
       dispatch(setSelectedItem(selectedItem));
     }
