@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {OTP_COUNT_DOWN} from '../../constant/app';
+import {OTP_COUNT_DOWN} from '../../constants/app';
 const initialState = {
   counter: OTP_COUNT_DOWN,
   otp: '',

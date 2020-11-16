@@ -5,7 +5,7 @@ const initialState = {
 
   role: undefined,
   isCashier: undefined,
-  // demo: true,
+  demo: false,
 };
 const app = createSlice({
   name: 'app',

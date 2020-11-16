@@ -12,7 +12,7 @@ const ProfileAccount = createSlice({
     setData: (state, action) => {
       const {value} = action.payload;
       state.data = value;
-    },
+    }
   },
 });
 

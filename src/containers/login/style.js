@@ -6,13 +6,18 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  touchableOpacity0: {
+    width: 40,
+    height: 30,
+  },
   view1: {
-    flex: 1,
     paddingHorizontal: 20,
     alignItems: 'center',
+    flex: 1,
   },
-  headerNav0: {
-    borderBottomWidth: 0,
+  header0: {backgroundColor: '#fff', borderBottomWidth: 0},
+  mTPImage0: {
+    left: 10,
   },
   image0: {
     width: 200,
@@ -39,4 +44,6 @@ export const styles = StyleSheet.create({
     paddingTop: 25,
   },
   myButton0: {width: '100%', alignSelf: 'center'},
+
+  myScrollView00: {paddingHorizontal: 25, alignItems: 'center'},
 });

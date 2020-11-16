@@ -37,7 +37,8 @@ import { checkCheckdomainUrl,
           cancelAppointmentUrl,
           confirmAppointmentSuccessUrl,
           createAppointmentUrl,
-          updateAppointmentUrl
+          updateAppointmentUrl,
+          registerUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -110,6 +111,25 @@ export const updateStyleApi = (styleId, formData) => {
       'Content-Type': 'multipart/form-data',
       Accept: 'multipart/form-data',
     },
+  });
+};
+
+export const postRegister = (
+  fullname,
+  password,
+  domainAddress,
+  storeName,
+  email,
+  mobile,
+) => {
+  return postAPI(registerUrl, {
+    fullname,
+    password,
+    domainAddress,
+    storeName,
+    email,
+    role: 'MANAGER',
+    mobile,
   });
 };
 

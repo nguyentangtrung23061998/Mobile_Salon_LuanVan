@@ -11,6 +11,7 @@ const Stack = createStackNavigator();
 import {StatusBar, Text, TextInput} from 'react-native';
 import AppStack from './navigation/appStack';
 import Auth from './containers/auth/auth'
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 let App = () => {
   const {isAuthLoading, isAuth} = useSelector((rootReducer) => rootReducer.app);
@@ -36,7 +37,9 @@ export default AppWithStore = () => {
   }, []);
   return (
     <Provider store={store}>
-      <App />
+      <SafeAreaProvider>
+        <App />
+      </SafeAreaProvider>
     </Provider>
   );
 };

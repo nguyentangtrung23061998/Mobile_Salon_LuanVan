@@ -1,12 +1,13 @@
-import React from 'react';
-import {} from './with_profile';
-import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { } from './with_profile';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import reactotron from 'reactotron-react-native';
+import { getProfile, getStoreInfo, getToken } from '../../utility/local_storage';
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.profile);
   const appState = useSelector((rootReducer) => rootReducer.app);
-  const {role} = appState;
+  const { role } = appState;
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -15,7 +16,15 @@ const useTodo = () => {
     navigation.navigate(route);
   };
 
-  return {state, role, dispatch, navigation, onNavigateEvent};
+  const onResetDataEvent = async () => {
+    try {
+      const value = await getProfile();
+      reactotron.log('value: ' + value.fullname)
+      dispatch(resetData({value}));
+    } catch (error) {}
+  };
+
+  return { state, role,onResetDataEvent, dispatch, navigation, onNavigateEvent };
 };
 
 export default useTodo;

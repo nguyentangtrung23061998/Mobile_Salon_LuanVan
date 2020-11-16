@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {Container} from 'native-base';
-import React, {useCallback} from 'react';
+import React,{useCallback,useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Header} from 'react-native-elements';
 import arrowRightGray from '../../assets/icon/arrow_right_gray/arrow_right_gray.png';
@@ -13,9 +13,17 @@ import {setAuth} from '../../reducers/app';
 import Button from './component/button/button';
 import styles from './style';
 import useProfileAccount from './use_profile';
+import {getStringFromIndexRange} from '../../utility/string';
+import reactotron from 'reactotron-react-native';
 
 const ProfileAccount = () => {
-  const {state, role, dispatch, onNavigateEvent} = useProfileAccount();
+  const {state, role, onResetDataEvent, dispatch, onNavigateEvent} = useProfileAccount();
+
+  useEffect(() => {
+    // onResetDataEvent();
+    reactotron.log('state: '  + state.fullname)
+  }, []);
+
   const clearLocalData = async () => {
     await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('storeInfo');
@@ -28,6 +36,19 @@ const ProfileAccount = () => {
     [],
   );
 
+  const _handleFullName = () => {
+    // if (state.data.fullname.length >= 19) {
+    //   return getStringFromIndexRange(state.data.fullname, 0, 18) + '...';
+    // }
+    return state.data.fullname;
+  };
+
+  const _handleEmail = () => {
+    // if (state.data.email.length >= 32) {
+    //   return getStringFromIndexRange(state.data.email, 0, 31) + '...';
+    // }
+    return state.data.email;
+  };
   // mymain
   return (
     <Container>
@@ -39,8 +60,8 @@ const ProfileAccount = () => {
         <View style={[styles.view1]}>
           <MTPImage0 style={[styles.fastImage0]} source={state.data?.avatar} />
           <View style={[styles.view2]}>
-            <Text style={[styles.text0]}>{state?.data?.fullname ?? ''}</Text>
-            <Text style={[styles.text1]}>{state?.data?.email ?? ''}</Text>
+            <Text style={[styles.text0]}>{_handleFullName()}</Text>
+            <Text style={[styles.text1]}>{_handleEmail()}</Text>
             <Text style={[styles.text2]}>
               {role === MANAGER_ROLE ? 'Quản lí' : 'Nhân viên'}
             </Text>

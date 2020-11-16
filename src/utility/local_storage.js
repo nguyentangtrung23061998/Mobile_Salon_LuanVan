@@ -32,6 +32,7 @@ export const setProfile = async (profile) => {
 export const getProfile = async () => {
   try {
     const profile = await AsyncStorage.getItem('profile');
+    reactotron.profile('profile: ' + profile);
     return JSON.parse(profile);
   } catch (e) {}
 };

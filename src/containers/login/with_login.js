@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-
+// globalState
 const initialState = {
   isSubmitting: false,
   isSuccess: false,

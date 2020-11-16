@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import appReducer from './app';
 import homeReducerWrapper from '../containers/home/state';
 import loginReducerWrapper from '../containers/login/with_login';
 import verifyDomainReducerWrapper from '../containers/verify_domain/state';
@@ -32,7 +33,9 @@ import createAppointmentReducer from '../containers/create_appointment/state';
 import customerList0 from '../containers/customer_list0/state';
 import customerListOrderReducer from '../containers/customer_list/state';
 import customerListReducer from '../containers/customer_list/state';
-import appReducer from './app';
+import editProfileReducer from '../containers/edit_profile/state';
+import signupSuccessReducer from '../containers/signUpSuccess/with_sign_up_success';
+
 
 const rootRecuder = combineReducers({
     app: appReducer,
@@ -41,6 +44,7 @@ const rootRecuder = combineReducers({
     home:homeReducerWrapper,
     storeInfo: storeInfoReducer,
     profile: profileReducer,
+    editProfile: editProfileReducer,
     service: serviceReducer,
     style: styleReducer,
     styleInfo: styleInfoReducer,
@@ -71,7 +75,8 @@ const rootRecuder = combineReducers({
     createAppointment: createAppointmentReducer,
     customerList0,
     customerListOrder: customerListOrderReducer,
-    customerList: customerListReducer
+    customerList: customerListReducer,
+    signupSuccess: signupSuccessReducer,
 })
 
 const rootReducerWrapper = (state, action) => {

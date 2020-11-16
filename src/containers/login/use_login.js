@@ -1,11 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import {postLogin} from '../../api/index';
-import {setAuth, setRole, setIsCashier} from '../../reducers/app';
+import {postLogin} from '../../api/index.js';
+import {setAuth, setRole, setIsCashier} from '../../reducers/app.js';
 import {
   setProfile,
   setStoreInfo,
   setToken,
-} from '../../utility/local_storage';
+} from '../../utility/local_storage.js';
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
@@ -21,17 +21,27 @@ import {
   updateInputValid,
 } from './with_login';
 import {setData as setDataProfile} from '../profile/with_profile';
+import AsyncStorage from '@react-native-community/async-storage';
 import reactotron from 'reactotron-react-native';
-
 const useTodo = () => {
   const dispatch = useDispatch();
   const state = useSelector((rootReducer) => rootReducer.login);
 
   const _navigation = useNavigation();
 
+  const saveDataToStorage = (storeInfo, token,profile) => {
+    AsyncStorage.setItem(
+      "userData",
+      JSON.stringify({
+        storeInfo,
+        token,
+        profile,
+        expiryDate: expirationDate.toISOString(),
+      })
+    );
+  };
+
   const _onSubmitSuccess = async (values) => {
-    // _navigation.navigate('Main');
-    reactotron.log("values", values);
     dispatch(postLoginStart());
 
     try {
@@ -40,17 +50,15 @@ const useTodo = () => {
         values.mobile,
         values.password,
       );
-      reactotron.log("response", response);
-
       if (response.status === 'success') {
         const {storeInfo} = response.data.user;
         const {token} = response.data.Auth;
         const {profile} = response.data;
-
+        // reactotron.log('response.data: '+ profile.fullname)
         await setStoreInfo(storeInfo);
         await setToken(token);
         await setProfile(profile);
-
+       
         dispatch(postLoginSuccess());
         dispatch(setAuth(true));
         dispatch(setDataHome({value: storeInfo}));
@@ -73,24 +81,16 @@ const useTodo = () => {
     password: '',
   };
 
-  // const _validation = yup.object().shape({
-  //   mobile: yup.string().required('Nhập số điện thoại'),
-  //   password: yup
-  //     .string()
-  //     .min(PASSWORD_MIN_LENGTH, 'Mật khẩu từ 8 đến 32 kí tự')
-  //     .required('Nhập mật khẩu')
-  //     .matches(
-  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-  //       'Mật khẩu phải chứa chữ hoa, chữ thường và số',
-  //     ),
-  // });
-
   const _validation = yup.object().shape({
     mobile: yup.string().required('Nhập số điện thoại'),
     password: yup
       .string()
+      .min(PASSWORD_MIN_LENGTH, 'Mật khẩu từ 8 đến 32 kí tự')
       .required('Nhập mật khẩu')
-     
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+        'Mật khẩu phải chứa chữ hoa, chữ thường và số',
+      ),
   });
 
   const form = useFormik({

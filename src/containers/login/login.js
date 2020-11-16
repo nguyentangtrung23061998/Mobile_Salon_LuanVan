@@ -1,17 +1,17 @@
-import React, { useRef } from 'react';
-import { Image, Text, TouchableOpacity, View, Platform } from 'react-native';
-import { Button } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import LinearGradient from 'react-native-linear-gradient';
-import Spinner from 'react-native-loading-spinner-overlay';
-import SafeAreaView from 'react-native-safe-area-view';
+import PopUp from '../popup/pop_up.js';
+import {Container} from 'native-base';
+import React, {useRef} from 'react';
+import {Image, Platform, Text, View} from 'react-native';
 import salozoText from '../../assets/icon/salozoText/salozo_text.png';
-import HeaderNav from '../headernav/header_nav';
+import {HeaderNavigation} from '../header_navigation/header_navigation';
 import Input from '../inputprimary/input';
-import { styles } from './style';
-import PopUp from '../popup/pop_up';
+import Loading from '../loading/loading';
+import {MyScrollView0} from '../my_scroll_view/my_scroll_view';
+import {PrimaryButton} from '../primary_button/primary_button';
+import {PASSWORD_MAX_LENGTH, PHONE_MAX_LENGTH} from '../../constants/app';
+import {numberOnly} from '../../utility/string';
+import {styles} from './style';
 import useLogin from './use_login';
-import { Container } from 'native-base';
 
 export default React.memo(() => {
   const {
@@ -21,11 +21,10 @@ export default React.memo(() => {
     updateInputValidEvent,
     isFormValid,
     onCloseErrorPopUpEvent,
-    _navigation,
   } = useLogin();
   const passwordRef = useRef();
 
-  const { handleBlur, setFieldValue, handleSubmit, errors, values } = form;
+  const {handleBlur, setFieldValue, handleSubmit, errors, values} = form;
   const {
     isMobileValid,
     isPasswordValid,
@@ -35,11 +34,15 @@ export default React.memo(() => {
     errorMsg,
   } = state;
 
+  // mysub
+  const _renderPopUps = () => <>{isSubmitting && <Loading />}</>;
+
   const _renderForm = () => {
     return (
       <View>
         <Text style={styles.text0}>Số điện thoại</Text>
         <Input
+          maxLength={PHONE_MAX_LENGTH}
           keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
           returnKeyType="next"
           onSubmitEditing={() => passwordRef?.current?.focus()}
@@ -49,20 +52,20 @@ export default React.memo(() => {
           onBlur={handleBlur('mobile')}
           onFocus={() => updateInputValidEvent('mobile', true)}
           onEndEditing={() => updateInputValidEvent('mobile', false)}
-          onChangeText={(value) => setFieldValue('mobile', value)}
+          onChangeText={(value) => setFieldValue('mobile', numberOnly(value))}
           value={values.mobile}
           errorMsg={isMobileValid || !errors.mobile ? null : errors.mobile}
           borderColor={
             isMobileFocused
               ? '#0077be'
               : !isMobileValid && errors.mobile
-                ? '#ff0033'
-                : '#d0d0d0'
+              ? '#ff0033'
+              : '#d0d0d0'
           }
         />
         <Text style={styles.text0}>{'Mật khẩu'}</Text>
         <Input
-          maxLength={32}
+          maxLength={PASSWORD_MAX_LENGTH}
           autoCapitalize="none"
           autoCorrect={false}
           inputRef={passwordRef}
@@ -84,8 +87,8 @@ export default React.memo(() => {
             isPasswordFocused
               ? '#0077be'
               : !isPasswordValid && errors.password
-                ? '#ff0033'
-                : '#d0d0d0'
+              ? '#ff0033'
+              : '#d0d0d0'
           }
         />
       </View>
@@ -93,54 +96,34 @@ export default React.memo(() => {
   };
   return (
     <Container>
-      <SafeAreaView style={styles.view0}>
-        <HeaderNav
-          hasLeftIcon
-          containerStyle={styles.headerNav0}
-          onPressLeft={goBack}
-        />
-        <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'}>
-          <View style={styles.view1}>
-            <Image
-              source={salozoText}
-              style={styles.image0}
-              resizeMode="contain"
-            />
-            {_renderForm()}
-            <View style={styles.view2}>
-              <Button
-                disabled={!isFormValid()}
-                ViewComponent={LinearGradient}
-                linearGradientProps={{
-                  colors: [
-                    isFormValid() ? '#4db1e9' : '#8d8d8d',
-                    isFormValid() ? '#005eff' : '#8d8d8d',
-                  ],
-                  start: { x: 0, y: 1 },
-                  end: { x: 0, y: 0 },
-                }}
-                title={'ĐĂNG NHẬP'}
-                onPress={handleSubmit}
-                containerStyle={{ borderRadius: 20 }}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                _navigation.navigate('ForgotPassword');
-              }}>
-              <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAwareScrollView>
-        <Spinner visible={isSubmitting} />
-        <PopUp
-          title={errorMsg ?? ''}
-          isVisible={errorMsg ?? false}
-          bottomButtonTitle={'Trở lại'}
-          hasBottomButton={true}
-          onPressBottomButton={onCloseErrorPopUpEvent}
-        />
-      </SafeAreaView>
+      <HeaderNavigation />
+      <MyScrollView0 contentContainerStyle={styles.myScrollView00}>
+        <Image source={salozoText} style={styles.image0} resizeMode="contain" />
+        {_renderForm()}
+        <View style={styles.view2}>
+          <PrimaryButton
+            disabled={!isFormValid()}
+            title={'ĐĂNG NHẬP'}
+            onPress={handleSubmit}
+          />
+        </View>
+        {/* TODO
+         <TouchableOpacity
+            onPress={() => {
+              _navigation.navigate('ForgotPassword');
+            }}>
+            <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
+          </TouchableOpacity> */}
+      </MyScrollView0>
+      <PopUp
+        title={errorMsg ?? ''}
+        isVisible={errorMsg ?? false}
+        bottomButtonTitle={'Trở lại'}
+        hasBottomButton={true}
+        onPressBottomButton={onCloseErrorPopUpEvent}
+      />
+
+      {_renderPopUps()}
     </Container>
   );
 });
