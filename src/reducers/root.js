@@ -35,7 +35,7 @@ import customerListOrderReducer from '../containers/customer_list/state';
 import customerListReducer from '../containers/customer_list/state';
 import editProfileReducer from '../containers/edit_profile/state';
 import signupSuccessReducer from '../containers/signUpSuccess/with_sign_up_success';
-
+import changePasswordReducer from '../containers/change_password/state';
 
 const rootRecuder = combineReducers({
     app: appReducer,
@@ -77,6 +77,7 @@ const rootRecuder = combineReducers({
     customerListOrder: customerListOrderReducer,
     customerList: customerListReducer,
     signupSuccess: signupSuccessReducer,
+    changePassword: changePasswordReducer,
 })
 
 const rootReducerWrapper = (state, action) => {

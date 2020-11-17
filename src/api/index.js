@@ -38,7 +38,8 @@ import { checkCheckdomainUrl,
           confirmAppointmentSuccessUrl,
           createAppointmentUrl,
           updateAppointmentUrl,
-          registerUrl
+          registerUrl,
+          updateProfileUrl
         } from './urls';
 
 export const postLogin = (domainAddress, mobile, password) => {
@@ -291,6 +292,54 @@ export const updateAppointment = (requestData) => {
     numberCustomer,
   });
 };
+
+
+export const updateProfile = (
+  fullname,
+  homeTown,
+  yearOfBirth,
+  currentPlace,
+  identityCard,
+  email,
+  mobile,
+  file,
+) => {
+  let formData = new FormData();
+  formData.append('fullname', fullname);
+  formData.append('mobile', mobile);
+  if (homeTown && !Lodash.isEmpty(homeTown)) {
+    formData.append('homeTown', homeTown);
+  }
+  if (yearOfBirth && !Lodash.isEmpty(yearOfBirth)) {
+    formData.append('yearOfBirth', yearOfBirth);
+  }
+  if (currentPlace && !Lodash.isEmpty(currentPlace)) {
+    formData.append('currentPlace', currentPlace);
+  }
+  if (identityCard && !Lodash.isEmpty(identityCard)) {
+    formData.append('identityCard', identityCard);
+  }
+
+  formData.append('email', email);
+  if (file && !validator.isURL(file)) {
+    formData.append('file', {
+      name: 'file.jpg',
+      uri: file,
+      type: 'image/jpeg',
+    });
+  }
+
+  return postAPI(updateProfileUrl, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'multipart/form-data',
+    },
+  });
+};
+export const changePassword = (currentPassword, newPassword) => {
+  return postAPI(changePasswordUrl, {currentPassword, newPassword});
+};
+
 
 export const PROCESSING_ORDERS_PARAM = '1';
 export const COMPLETED_ORDERS_PARAM = '2';

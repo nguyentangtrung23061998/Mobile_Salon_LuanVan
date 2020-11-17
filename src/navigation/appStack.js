@@ -31,6 +31,8 @@ import UpdateAppointment from '../containers/update_appointment/update_appointme
 import CreateAppointment from '../containers/create_appointment/create_appointment';
 import CustomerList0 from '../containers/customer_list0/customer_list0';
 import CustomerList from '../containers/customer_list/customer_list';
+import EditProfile from '../containers/edit_profile/edit_profile';
+import ChangePassword from '../containers/change_password/change_password';
 const Stack = createStackNavigator();
 
 export default AppStack = () => {
@@ -38,6 +40,7 @@ export default AppStack = () => {
     <Stack.Navigator headerMode="none">
      <Stack.Screen component={Main} name="Main" />
       <Stack.Screen name="StoreInfo" component={StoreInfo} />
+      <Stack.Screen component={ChangePassword} name="ChangePassword" />
       <Stack.Screen component={ServiceList} name="ServiceList" />
       <Stack.Screen component={StyleList} name="StyleList" />
       <Stack.Screen component={CreateStyle} name="CreateStyle" />
@@ -70,6 +73,7 @@ export default AppStack = () => {
       <Stack.Screen component={CreateAppointment} name="CreateAppointment" />
       <Stack.Screen component={CustomerList0} name="CustomerList0" />
       <Stack.Screen component={CustomerList} name="CustomerList" />
+      <Stack.Screen component={EditProfile} name="EditProfile" />
     </Stack.Navigator>
   );
 };

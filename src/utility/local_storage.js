@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import reactotron from 'reactotron-react-native';
 
 export const setToken = async (token) => {
   try {
@@ -31,8 +32,7 @@ export const setProfile = async (profile) => {
 };
 export const getProfile = async () => {
   try {
-    const profile = await AsyncStorage.getItem('profile');
-    reactotron.profile('profile: ' + profile);
-    return JSON.parse(profile);
+    const profile = JSON.parse(await AsyncStorage.getItem('profile'));
+    return profile
   } catch (e) {}
 };

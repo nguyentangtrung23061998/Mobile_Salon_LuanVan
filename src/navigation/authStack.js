@@ -6,7 +6,7 @@ import VerifyDomain from '../containers/verify_domain/verify_domain';
 import SignUpAccount from '../containers/signup/signupaccount/sign_up_account';
 import SignUpSuccess from '../containers/signUpSuccess/sign_up_success';
 import VerifyOtp from '../containers/verify_otp/verify_otp';
-import SignUpSuccessAccount from '../container/signUpSuccess/sign_up_success';
+import SignUpSuccessAccount from '../containers/signUpSuccess/sign_up_success';
 // import Main from '../containers/main/main'
 
 const Stack = createStackNavigator();

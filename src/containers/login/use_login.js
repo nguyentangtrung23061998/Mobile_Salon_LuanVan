@@ -13,6 +13,7 @@ import {PASSWORD_MIN_LENGTH} from '../../constants/app';
 import {setData as setDataHome} from '../home/state';
 import {setData as setDataStoreDetails} from '../storeInfo/with_store_info';
 import {setData as setDataEditProfile} from '../edit_profile/state';
+import { getProfile, getStoreInfo, getToken } from '../../utility/local_storage';
 import {
   onCloseErrorPopUp,
   postLoginFaild,
@@ -67,6 +68,7 @@ const useTodo = () => {
         dispatch(setRole({value: profile?.role}));
         dispatch(setIsCashier({value: profile?.isCashier}));
         dispatch(setDataProfile({value: profile}));
+
         _navigation.navigate('Main');
       } else {
         dispatch(postLoginFaild({errMsg: response.message}));

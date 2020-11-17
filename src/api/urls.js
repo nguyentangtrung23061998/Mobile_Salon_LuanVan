@@ -47,3 +47,5 @@ export const getAppointmentsByDateUrl = '/schedules/search/date?date=';
 export const cancelAppointmentUrl = '/schedules/cancel/';
 export const createAppointmentUrl = '/schedules/';
 export const confirmAppointmentSuccessUrl = '/schedules/arrived/';
+
+export const updateProfileUrl = '/users/updateProfile';
