@@ -7,7 +7,7 @@ import storeInfo from '../../assets/icon/storeInfo/store_info.png';
 import homeBackground from '../../assets/image/home_background/home_background.png';
 import salozoText from '../../assets/image/salozo_text/salozo_text.png';
 import { Container } from 'native-base';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Text, View } from 'react-native';
 import { Header } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -22,12 +22,17 @@ import MySalonIcon, { SalonIcon } from './component/mySalonIcon/my_salon_icon';
 import useHomeAccount from './hook';
 import styles from './style';
 import { MyScrollView0 } from '../my_scroll_view/my_scroll_view';
+import reactotron from 'reactotron-react-native';
 
 export default React.memo(() => {
   // myhook
-  const { state, role, isCashier, onNavigateEvent } = useHomeAccount();
+  const { state, _setProfile,role, isCashier, onNavigateEvent } = useHomeAccount();
 
-  // myfunction
+  useEffect(() =>  {
+    _setProfile();
+  
+  }, []);
+
   const _handleStoreName = () => {
     if (state?.data?.name?.length >= 28) {
       return getStringFromIndexRange(state?.data?.name, 0, 27) + '...';
@@ -47,67 +52,70 @@ export default React.memo(() => {
   );
 
   const _renderUIByManagerRole = () => {
-    return (
-      <View style={[styles.view1]}>
-        <View style={[styles.view2]}>
-          <Text style={[styles.text1]}>Mario salon Sư Vạn Hạnh</Text>
-          <View style={[styles.view8]}>
-            <View style={[styles.view3]}>
-              <MyIcon
-                imageSource={storeInfo}
-                startColor="#8896ff"
-                endColor="#263ec1"
-                label='Thông tin cửa hàng'
-                onPress={() => onNavigateEvent('StoreInfo')}
-              />
-              <MyIcon
-                imageSource={manageStaff}
-                startColor="#5dc9ea"
-                endColor="#003ce0"
-                label='Quản lý nhân viên'
-                onPress={() => onNavigateEvent('ListStaff')}
-              />
-              <MyIcon
-                imageSource={manageService}
-                startColor="#5deadf"
-                endColor="#00907a"
-                label='Quản lý dịch vụ'
-                onPress={() => onNavigateEvent('ServiceList')}
-              />
-              <MyIcon
-                imageSource={manageCustomer}
-                startColor="#b5ea62"
-                endColor="#00935b"
-                label='Quản lý khách hàng'
-                onPress={() => onNavigateEvent('ListCustomer')}
-              />
+    if (state.data.role === MANAGER_ROLE) {
+      return (
+        <View style={[styles.view1]}>
+          <View style={[styles.view2]}>
+            <Text style={[styles.text1]}>Mario salon Sư Vạn Hạnh</Text>
+            <View style={[styles.view8]}>
+              <View style={[styles.view3]}>
+                <MyIcon
+                  imageSource={storeInfo}
+                  startColor="#8896ff"
+                  endColor="#263ec1"
+                  label='Thông tin cửa hàng'
+                  onPress={() => onNavigateEvent('StoreInfo')}
+                />
+                <MyIcon
+                  imageSource={manageStaff}
+                  startColor="#5dc9ea"
+                  endColor="#003ce0"
+                  label='Quản lý nhân viên'
+                  onPress={() => onNavigateEvent('ListStaff')}
+                />
+                <MyIcon
+                  imageSource={manageService}
+                  startColor="#5deadf"
+                  endColor="#00907a"
+                  label='Quản lý dịch vụ'
+                  onPress={() => onNavigateEvent('ServiceList')}
+                />
+                <MyIcon
+                  imageSource={manageCustomer}
+                  startColor="#b5ea62"
+                  endColor="#00935b"
+                  label='Quản lý khách hàng'
+                  onPress={() => onNavigateEvent('ListCustomer')}
+                />
+              </View>
             </View>
           </View>
+          <View style={[styles.view4]} />
+          <View style={[styles.view6]} />
+          <Text style={[styles.text2]}>Salon của bạn</Text>
+          <View style={[styles.view5]}>
+            <MySalonIcon
+              imageSource={calendar}
+              title='Lịch hẹn'
+              description='Xem danh sách, đặt lịch hẹn'
+              onPress={() => onNavigateEvent('AppointmentList')}
+            />
+            <View style={styles.view13} />
+            <MySalonIcon
+              imageSource={order}
+              title='Đơn hàng'
+              description='Tạo đơn hàng, thanh toán'
+              onPress={() => onNavigateEvent('Order')}
+            />
+          </View>
         </View>
-        <View style={[styles.view4]} />
-        <View style={[styles.view6]} />
-        <Text style={[styles.text2]}>Salon của bạn</Text>
-        <View style={[styles.view5]}>
-          <MySalonIcon
-            imageSource={calendar}
-            title='Lịch hẹn'
-            description='Xem danh sách, đặt lịch hẹn'
-            onPress={() => onNavigateEvent('AppointmentList')}
-          />
-          <View style={styles.view13} />
-          <MySalonIcon
-            imageSource={order}
-            title='Đơn hàng'
-            description='Tạo đơn hàng, thanh toán'
-            onPress={() => onNavigateEvent('Order')}
-          />
-        </View>
-      </View>
-    );
+      );
+    }
   };
 
   const _renderUIByEmployeeRole = () => {
-    if (role === EMPLOYEE_ROLE && !isCashier) {
+    reactotron.log(state.data.role)
+    if (state.data.role === EMPLOYEE_ROLE && !state.data.isCashier) {
       return (
         <View style={[styles.view10]}>
           <View style={[styles.view11]}>
@@ -132,7 +140,7 @@ export default React.memo(() => {
   };
 
   const _renderUIByCashierRole = () => {
-    if (role === EMPLOYEE_ROLE && isCashier) {
+    if (state.data.role === EMPLOYEE_ROLE && state.data.isCashier) {
       return (
         <View style={[styles.view10]}>
           <View style={[styles.view11]}>

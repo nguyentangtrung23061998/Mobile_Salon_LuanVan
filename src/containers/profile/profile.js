@@ -20,8 +20,7 @@ const ProfileAccount = () => {
   const {state, role, onResetDataEvent, dispatch, onNavigateEvent} = useProfileAccount();
 
   useEffect(() => {
-    // onResetDataEvent();
-    reactotron.log('state: '  + state.fullname)
+    onResetDataEvent();
   }, []);
 
   const clearLocalData = async () => {

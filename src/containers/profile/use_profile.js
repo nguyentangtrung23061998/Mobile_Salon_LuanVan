@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import reactotron from 'reactotron-react-native';
 import { getProfile, getStoreInfo, getToken } from '../../utility/local_storage';
+import {setData as setDataProfile} from './with_profile';
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.profile);
   const appState = useSelector((rootReducer) => rootReducer.app);
@@ -19,8 +20,7 @@ const useTodo = () => {
   const onResetDataEvent = async () => {
     try {
       const value = await getProfile();
-      reactotron.log('value: ' + value.fullname)
-      dispatch(resetData({value}));
+      dispatch(setDataProfile({value}));
     } catch (error) {}
   };
 
