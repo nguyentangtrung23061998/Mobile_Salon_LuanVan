@@ -40,6 +40,7 @@ const initialState = {
   canAdd: true,
   isShowPopupSuccess: undefined,
   isDeleteSuccess: undefined,
+  role:undefined
 };
 
 const ServiceListAccount = createSlice({
@@ -186,6 +187,10 @@ const ServiceListAccount = createSlice({
       state.isShowPopupSuccess = null;
       state.isDeleteSuccess = null;
     },
+    setRole: (state,action) =>{
+      const {value} = action.payload;
+      state.role = value;
+    }
   },
 });
 
@@ -213,6 +218,7 @@ export const {
   resetState,
   setCanAdd,
   onCloseSuccessPopUp,
+  setRole
 } = actions;
 
 const reducerWrapper = (state, action) => {

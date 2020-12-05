@@ -149,17 +149,14 @@ export default function Calendar({
           <View style={[styles.view0]}>
             <View style={[styles.view1]}>
               <Text style={[styles.text2]}>Giờ hẹn</Text>
-              <TouchableOpacity onPress={() => setCanShowTimePickerEvent(true)}>
-                <View pointerEvents="none">
+                <View>
                   <Input
-                    editable={false}
                     inputContainerStyle={[styles.input1]}
                     containerStyle={[styles.input0]}
                     onChangeText={onChangeTime}
                     value={timeOfCalendarPicker}
                   />
                 </View>
-              </TouchableOpacity>
             </View>
             <Text style={[styles.text2]}>
               Tháng {_getVietnameseMonths()}, {currentYear}

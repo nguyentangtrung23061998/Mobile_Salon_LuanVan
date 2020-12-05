@@ -2,12 +2,12 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import styles from './style';
 import {Button, Overlay} from 'react-native-elements';
-import Input from '../../../../input/input';
 import useChangePassword from './hook';
 import {noSpaceAtAll} from '../../../../../utility/string';
 import {setInputFocused} from './state';
 import {MyScrollView0} from '../../../../my_scroll_view/my_scroll_view';
-
+import {Input} from 'react-native-elements';
+import {PASSWORD_MAX_LENGTH} from '../../../../../constants/app';
 export default function PopUpChangePassword({onPressBottomButton, onConfirm}) {
   const {state, dispatch, form} = useChangePassword();
 
@@ -19,8 +19,12 @@ export default function PopUpChangePassword({onPressBottomButton, onConfirm}) {
           <View style={styles.view1}>
             <Text style={styles.text1}>{'Mật khẩu'}</Text>
             <Input
+              maxLength={PASSWORD_MAX_LENGTH}
+              containerStyle={styles.input0}
+              labelStyle={styles.input1}
+              inputContainerStyle={styles.input2}
+              inputStyle={styles.input3}
               secureTextEntry
-              containerStyle={styles.textInput0}
               placeholder={'Nhập mật khẩu cho tài khoản'}
               onChangeText={(value) => {
                 form.setFieldValue('newPassword', noSpaceAtAll(value));
@@ -36,7 +40,7 @@ export default function PopUpChangePassword({onPressBottomButton, onConfirm}) {
                   setInputFocused({name: 'newPassword', isFocused: false}),
                 );
               }}
-              errorText={
+              errorMessage={
                 state.isNewPasswordValid || !form.errors.newPassword
                   ? null
                   : form.errors.newPassword
@@ -47,8 +51,12 @@ export default function PopUpChangePassword({onPressBottomButton, onConfirm}) {
           <View style={styles.view1}>
             <Text style={styles.text1}>{'Nhập lại mật khẩu'}</Text>
             <Input
+              maxLength={PASSWORD_MAX_LENGTH}
+              containerStyle={styles.input0}
+              labelStyle={styles.input1}
+              inputContainerStyle={styles.input2}
+              inputStyle={styles.input3}
               secureTextEntry
-              containerStyle={styles.textInput0}
               placeholder={'Nhập lại mật khẩu cho tài khoản'}
               onChangeText={(value) => {
                 form.setFieldValue('newPasswordConfirmed', noSpaceAtAll(value));
@@ -70,7 +78,7 @@ export default function PopUpChangePassword({onPressBottomButton, onConfirm}) {
                   }),
                 );
               }}
-              errorText={
+              errorMessage={
                 state.isNewPasswordConfirmedValid ||
                 !form.errors.newPasswordConfirmed
                   ? null

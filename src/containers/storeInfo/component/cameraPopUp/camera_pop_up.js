@@ -14,9 +14,7 @@ const CameraPopUp = ({onPress, isVisible}) => {
           style={[styles.button0]}
           title={'Chụp ảnh'}
           buttonStyle={[styles.button3]}
-          onPress={() => {
-            onPress('camera');
-          }}
+          onPress={() => onPress('camera')}
         />
         <View style={[styles.view1]} />
         <Button

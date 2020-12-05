@@ -1,5 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import { getProfile, getStoreInfo, getToken } from '../../utility/local_storage';
 import reactotron from 'reactotron-react-native';
 
 import {
@@ -32,12 +33,23 @@ import {
   resetState,
   setCanAdd,
   onCloseSuccessPopUp,
+  setRole
 } from './with_service_list';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.service);
   const appState = useSelector((rootReducer) => rootReducer.app);
-  const {role} = appState;
+  // const {role} = appState;
+  const role = "";
+  const _setProfile = async () => {
+    try {
+      const profile = await getProfile();
+      // roleObj = profile.role;
+    
+     dispatch(setRole({value:  profile.role}));
+     reactotron.log('state.role: ' + state.role)
+    } catch (error) { }
+  }
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -157,6 +169,7 @@ const useTodo = () => {
     onResetStateEvent,
     onSetCanAddEvent,
     onCloseSuccessPopUpEvent,
+    _setProfile
   };
 };
 

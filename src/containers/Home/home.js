@@ -26,11 +26,10 @@ import reactotron from 'reactotron-react-native';
 
 export default React.memo(() => {
   // myhook
-  const { state, _setProfile,role, isCashier, onNavigateEvent } = useHomeAccount();
+  const { state, _setProfile, onNavigateEvent } = useHomeAccount();
 
   useEffect(() =>  {
     _setProfile();
-  
   }, []);
 
   const _handleStoreName = () => {
@@ -114,7 +113,6 @@ export default React.memo(() => {
   };
 
   const _renderUIByEmployeeRole = () => {
-    reactotron.log(state.data.role)
     if (state.data.role === EMPLOYEE_ROLE && !state.data.isCashier) {
       return (
         <View style={[styles.view10]}>

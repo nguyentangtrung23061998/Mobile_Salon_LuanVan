@@ -15,7 +15,6 @@ import {
   resetState,
 } from './state';
 import {createOrder} from '../../../api/index';
-import {useTranslation} from 'react-i18next';
 import {setProcessingDataOrder0} from '../order/state';
 import useOrder from '../order/hook';
 import reactotron from 'reactotron-react-native';

@@ -141,6 +141,7 @@ export default React.memo(() => {
             inputContainerStyle={[
               canShowDatePicker ? styles.input1 : styles.input2,
             ]}
+            editable={false}
             value={yearOfBirth ?? ''}
             label="Ngày sinh:"
             labelStyle={[styles.input0]}
@@ -268,7 +269,7 @@ export default React.memo(() => {
           onPress={onPressCameraEvent}
         />
         <DatePicker
-          isVisible={state?.canShowDatePicker}
+          isVisible={state.canShowDatePicker}
           date={state?.pickerDate}
           onPressContainer={() => {
             onResetPickerDateEvent();

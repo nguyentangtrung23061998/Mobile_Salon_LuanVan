@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   image0: {width: '100%', aspectRatio: 414 / 194},
   myScrollView0: {
-    paddingBottom: 50,
+    flexGrow: 1,
   },
 
   safeAreaView0: {
@@ -30,6 +30,19 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: '#000',
   },
+  input5: {
+    color: '#1790e9',
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    marginTop: 3,
+  },
+  input6: {
+    color: '#1790e9',
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+  },
 
   view0: {
     marginHorizontal: 25,
@@ -53,9 +66,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   myButton0: {
-    marginHorizontal: 25,
-    marginBottom: 25,
-    borderRadius: 45,
+    marginHorizontal: 20,
+    marginVertical: 35,
   },
   header0: {backgroundColor: '#fff'},
   text0: {
@@ -73,6 +85,19 @@ const styles = StyleSheet.create({
   touchableOpacity0: {
     width: 40,
     height: 30,
+  },
+  rNEInput0: {
+    paddingHorizontal: 0,
+  },
+  rNEInput1: {
+    borderBottomColor: '#d0d0d0',
+  },
+  rNEInput2: {
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 'normal',
+    color: '#000000',
+    fontFamily: 'Quicksand-Regular',
   },
 });
 

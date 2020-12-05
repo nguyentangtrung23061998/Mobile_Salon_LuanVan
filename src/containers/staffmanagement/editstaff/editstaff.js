@@ -29,6 +29,7 @@ import PopUp from './component/error_pop_up/error_pop_up';
 import PopUpChangePassword from './component/popUpChangePassword/changePassword';
 import styles from './style';
 import useEditStaff from './use_edit_staff';
+import reactotron from 'reactotron-react-native';
 
 export default function EditStaff() {
   // myhook
@@ -69,7 +70,8 @@ export default function EditStaff() {
     () => <Text style={[styles.text7]}>Chỉnh sửa thông tin nhân viên</Text>,
     [],
   );
-
+ 
+  let identityCard =  state?.data?.identityCard +"";
   const initialValues = {
     fullname: state?.data?.fullname ?? '',
     position: state?.data?.position ?? '',
@@ -77,7 +79,7 @@ export default function EditStaff() {
     homeTown: state?.data?.homeTown ?? '',
     yearOfBirth: state?.data?.yearOfBirth ?? '',
     currentPlace: state?.data?.currentPlace ?? '',
-    identityCard: state?.data?.identityCard ?? '',
+    identityCard: identityCard === 'null' || identityCard === null ? '' : identityCard,
     mobile: state?.data?.mobile ?? '',
     email: state?.data?.email ?? '',
     avatar: state?.data?.avatar ?? '',

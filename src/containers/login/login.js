@@ -63,7 +63,7 @@ export default React.memo(() => {
               : '#d0d0d0'
           }
         />
-        <Text style={styles.text0}>{'Mật khẩu'}</Text>
+        <Text style={styles.text0}>Mật khẩu</Text>
         <Input
           maxLength={PASSWORD_MAX_LENGTH}
           autoCapitalize="none"

@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Main from '../containers/main/main';
 import StoreInfo from '../containers/storeInfo/store_info';
@@ -33,12 +33,14 @@ import CustomerList0 from '../containers/customer_list0/customer_list0';
 import CustomerList from '../containers/customer_list/customer_list';
 import EditProfile from '../containers/edit_profile/edit_profile';
 import ChangePassword from '../containers/change_password/change_password';
+import Home from '../containers/home/home';
 const Stack = createStackNavigator();
 
 export default AppStack = () => {
   return (
     <Stack.Navigator headerMode="none">
-     <Stack.Screen component={Main} name="Main" />
+      <Stack.Screen component={Main} name="Main" />
+      <Stack.Screen component={Home} name="Home" />
       <Stack.Screen name="StoreInfo" component={StoreInfo} />
       <Stack.Screen component={ChangePassword} name="ChangePassword" />
       <Stack.Screen component={ServiceList} name="ServiceList" />

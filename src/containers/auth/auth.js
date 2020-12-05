@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import { setAuth, setIsCashier } from '../../reducers/app';
 import { getProfile, getStoreInfo, getToken } from '../../utility/local_storage';
 import { setData as setDataEditProfile } from '../edit_profile/state';

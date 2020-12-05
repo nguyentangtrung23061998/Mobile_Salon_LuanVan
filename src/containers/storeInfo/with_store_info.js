@@ -47,6 +47,10 @@ const StoreInfoAccount = createSlice({
         state.pickerCloseTime = closeTime;
       }
     },
+    setData0: (state, action) => {
+      const {value} = action.payload;
+      state.data.image = value;
+    },
     setOpenTime: (state, action) => {
       const {value} = action.payload;
       state.data.openTime = value;
@@ -204,6 +208,7 @@ export const {
   setErrorMessage,
   setCanShowCamera,
   resetData,
+  setData0,
 } = actions;
 
 const reducerWrapper = (state, action) => {

@@ -40,7 +40,6 @@ const StyleListAccount = ({route, navigation}) => {
   };
 
   const _renderList = (listData) => {
-    reactotron.log('listData: ', listData)
     return (
       <List
         data={listData ?? []}

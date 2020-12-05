@@ -24,7 +24,12 @@ import {
   updateStoreSuccess,
   setCanShowCamera,
   resetData,
+  setData0,
 } from './with_store_info';
+import {useTranslation} from 'react-i18next';
+import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker0 from 'react-native-image-picker';
+import {Platform} from 'react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.storeInfo);
@@ -142,6 +147,7 @@ const useTodo = () => {
 
   const onSetSuccessMessageEvent = (value) => {
     dispatch(setSuccessMessage({value}));
+    navigation.navigate('Home')
   };
 
   const onSetErrorMessageEvent = (value) => {
@@ -157,6 +163,49 @@ const useTodo = () => {
       const data = await getStoreInfo();
       dispatch(resetData({value: data}));
     } catch (error) {}
+  };
+
+  const onPressSelectorPopUpEvent = (selectOption) => {
+    switch (selectOption) {
+      case 'library':
+        dispatch(setCanShowCamera({value: false}));
+        setTimeout(async () => {
+          try {
+            const image = await ImagePicker.openPicker({
+              mediaType: 'photo',
+            });
+            dispatch(setData0({value: image.path}));
+          } catch (error) {}
+        }, 300);
+        break;
+      case 'camera':
+        dispatch(setCanShowCamera({value: false}));
+        setTimeout(async () => {
+          ImagePicker0.launchCamera(
+            {
+              storageOptions: {
+                skipBackup: true,
+                path: 'images',
+              },
+            },
+            async (response) => {
+              if (response.didCancel) {
+              } else {
+                try {
+                  let image = await response.uri;
+                  if (Platform.OS === 'ios') {
+                    image = '~' + image.substring(image.indexOf('/Documents'));
+                  }
+                  dispatch(setData0({value: image}));
+                } catch (err) {}
+              }
+            },
+          );
+        }, 300);
+        break;
+      case 'cancel':
+        dispatch(setCanShowCamera({value: false}));
+    }
   };
 
   return {
@@ -179,6 +228,7 @@ const useTodo = () => {
     onSetErrorMessageEvent,
     onSetCanShowCameraEvent,
     onResetDataEvent,
+    onPressSelectorPopUpEvent,
   };
 };
 

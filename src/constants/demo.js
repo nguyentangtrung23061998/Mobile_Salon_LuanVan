@@ -1,5 +1,5 @@
 export const REGISTER = {
-  fullname: 'Tống Xuân Phụng',
+  fullname: 'Nguyễn Tăng Trung',
   password: '12345678',
   passwordConfirmed: '12345678',
   domainAddress: 'domainadress0mtp12',
@@ -9,5 +9,5 @@ export const REGISTER = {
 };
 
 export const VERIFY_DOMAIN = {
-  domain: 'tiennn',
+  domain: 'trung',
 };

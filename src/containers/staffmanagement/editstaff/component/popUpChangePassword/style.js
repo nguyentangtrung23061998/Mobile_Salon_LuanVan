@@ -73,6 +73,29 @@ export default StyleSheet.create({
   myScrollView00: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    flexGrow: 1,
+  },
+
+  input0: {
+    paddingHorizontal: 0,
+  },
+  input1: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 14,
+    lineHeight: 18,
+    color: '#000',
+  },
+  input2: {
+    borderWidth: 1,
+    borderColor: '#dedede',
+    borderRadius: 6,
+    backgroundColor: '#fcfcfc',
+    paddingLeft: 10,
+  },
+  input3: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: '#000',
   },
 });

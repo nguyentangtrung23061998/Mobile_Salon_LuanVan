@@ -62,7 +62,7 @@ const ProfileAccount = () => {
             <Text style={[styles.text0]}>{_handleFullName()}</Text>
             <Text style={[styles.text1]}>{_handleEmail()}</Text>
             <Text style={[styles.text2]}>
-              {role === MANAGER_ROLE ? 'Quản lí' : 'Nhân viên'}
+              {state.data.role === MANAGER_ROLE ? 'Quản lí' : 'Nhân viên'}
             </Text>
           </View>
         </View>

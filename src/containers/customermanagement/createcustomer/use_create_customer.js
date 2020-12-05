@@ -27,7 +27,7 @@ const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.createCustomer);
   const navigation = useNavigation();
   const netInfo = useNetInfo();
-  const {onGetAllCustomersEvent} = useListCustomer();
+  const {getAllCustomerEvent} = useListCustomer();
   const onGoBackEvent = () => navigation.goBack();
 
   const updateInputValidEvent = (name, isValid) => {
@@ -75,7 +75,7 @@ const useTodo = () => {
     dispatch(onCloseSuccessPopUp());
   };
   const updateListCustomer = () => {
-    onGetAllCustomersEvent();
+    getAllCustomerEvent();
   };
   const onSetCanShowDatePickerEvent = (value) => {
     dispatch(setCanShowDatePicker({value}));

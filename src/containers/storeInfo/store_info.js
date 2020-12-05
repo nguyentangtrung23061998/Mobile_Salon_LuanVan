@@ -2,10 +2,7 @@ import {useFormik} from 'formik';
 import {Container} from 'native-base';
 import React, {useCallback} from 'react';
 import {Platform, Text, TouchableOpacity, View} from 'react-native';
-import {Button, Header} from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker';
-import LinearGradient from 'react-native-linear-gradient';
-import reactotron from 'reactotron-react-native';
+import {Header, Input as RNEInput} from 'react-native-elements';
 import * as yup from 'yup';
 import back from '../../assets/icon/back/back.png';
 import camera from '../../assets/icon/camera/camera.png';
@@ -14,15 +11,23 @@ import Input, {InputMask} from '../input/input';
 import Loading from '../loading/loading';
 import {MTPImage0} from '../mtp_image';
 import {MyScrollView0} from '../my_scroll_view/my_scroll_view';
+import {PrimaryButton} from '../primary_button/primary_button';
 import SuccessPopUp from '../success_pop_up/success_pop_up';
 import TimePicker from '../time_picker/time_picker';
+import {
+  MAX_DIGITS_NUMBER_OF_STAFF,
+  PHONE_MAX_LENGTH,
+  STORE_ADDRESS_MAX_LENGTH,
+  STORE_NAME_MAX_LENGTH,
+} from '../../constants/app';
 import {inputHhmm} from '../../utility/input';
-import {noSpaceAtAll, noSpaceAtEntry} from '../../utility/string';
+import {noSpaceAtEntry, numberOnly} from '../../utility/string';
 import CameraPopUp from './component/cameraPopUp/camera_pop_up';
 import styles from './style';
 import useStoreInfo from './use_store_info';
+
 export default React.memo(() => {
-  // hook
+  // myhook
   const {
     state,
     onGoBackEvent,
@@ -39,6 +44,7 @@ export default React.memo(() => {
     onSetCanShowCameraEvent,
     onSetErrorMessageEvent,
     onResetDataEvent,
+    onPressSelectorPopUpEvent,
   } = useStoreInfo();
   const {
     isStoreNameValid,
@@ -83,125 +89,6 @@ export default React.memo(() => {
     [],
   );
 
-  const _openAndroidImageLib = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      let imgUri;
-      if (response.didCancel) {
-      } else {
-        try {
-          imgUri = await response.uri;
-          setFieldValue('image', imgUri);
-          onSetInputValueEvent('image', imgUri);
-        } catch (err) {}
-      }
-    });
-  };
-  const _openIosImageLib = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      let imgUri;
-      try {
-        imgUri = await response.uri;
-        imgUri = '~' + imgUri.substring(imgUri.indexOf('/Documents'));
-        setFieldValue('image', imgUri);
-        onSetInputValueEvent('image', imgUri);
-      } catch (err) {}
-    });
-  };
-  const _openImageLibrary = () => {
-    onSetCanShowCameraEvent(false);
-
-    if (Platform.OS === 'android') {
-      _openAndroidImageLib();
-    } else {
-      setTimeout(() => {
-        _openIosImageLib();
-      }, 300);
-    }
-  };
-
-  const _openAndroidCamera = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-
-    ImagePicker.launchCamera(options, async (response) => {
-      let imgUri;
-      if (response.didCancel) {
-      } else {
-        try {
-          imgUri = await response.uri;
-          setFieldValue('image', imgUri);
-          onSetInputValueEvent('image', imgUri);
-        } catch (err) {}
-      }
-    });
-  };
-  const _openIosCamera = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
-    ImagePicker.launchCamera(options, async (response) => {
-      let imgUri;
-      try {
-        imgUri = await response.uri;
-        imgUri = '~' + imgUri.substring(imgUri.indexOf('/Documents'));
-        setFieldValue('image', imgUri);
-        onSetInputValueEvent('image', imgUri);
-      } catch (err) {}
-    });
-  };
-
-  const _openCamera = () => {
-    onSetCanShowCameraEvent(false);
-    if (Platform.OS === 'android') {
-      _openAndroidCamera();
-    } else {
-      setTimeout(() => {
-        _openIosCamera();
-      }, 300);
-    }
-  };
-
-  const _onPressCamera = (type) => {
-    switch (type) {
-      case 'cancel':
-        onSetCanShowCameraEvent(false);
-        break;
-      case 'library':
-        _openImageLibrary();
-        break;
-      case 'camera':
-        _openCamera();
-        break;
-    }
-  };
-
   const _initialValues = {
     name: state?.data?.name ?? '',
     address: '',
@@ -213,8 +100,11 @@ export default React.memo(() => {
     image: '',
   };
   const _validation = yup.object().shape({
-    name: yup.string().required('Nhập tên cửa hàng'),
-    domainAddress: yup.string().required('Nhập tên miền địa chỉ'),
+    name: yup.string().required('Nhập tên miền địa chỉ'),
+    domainAddress: yup
+      .string()
+      .required('Nhập tên miền địa chỉ')
+      .matches(/^[a-z][a-z0-9]*$/i, 'Tên miền không hợp lệ'),
   });
   const _onSubmitSuccess = async (values) => {
     onUpdateStoreEvent();
@@ -226,7 +116,7 @@ export default React.memo(() => {
   });
 
   const {handleBlur, handleSubmit, setFieldValue, errors} = form;
-  let url =""
+
   // main
   return (
     <Container>
@@ -243,7 +133,7 @@ export default React.memo(() => {
           <Input
             inputContainerStyle={[styles.input4]}
             placeholderTextColor={'#000'}
-            maxLength={50}
+            maxLength={STORE_NAME_MAX_LENGTH}
             title='Tên cửa hàng'
             required
             titleStyle={[styles.input0]}
@@ -265,37 +155,23 @@ export default React.memo(() => {
                 : '#d0d0d0'
             }
           />
-          <Input
+
+          <RNEInput
+            label={
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.input3}>Tên miền địa chỉ</Text>
+                <Text style={{color: 'red'}}>*</Text>
+              </View>
+            }
             editable={false}
-            inputContainerStyle={[styles.input4]}
-            placeholderTextColor={'#000'}
-            maxLength={70}
-            title='Tên miền địa chỉ'
-            required
-            titleStyle={[styles.input3]}
-            containerStyle={[styles.input2]}
-            onBlur={handleBlur('domainAddress')}
-            onFocus={() => updateInputValidEvent('domainAddress', true)}
-            onEndEditing={() => updateInputValidEvent('domainAddress', false)}
-            onChangeText={(value) => {
-              onSetInputValueEvent('domainAddress', noSpaceAtEntry(value));
-              setFieldValue('domainAddress', noSpaceAtAll(value));
-            }}
+            containerStyle={styles.rNEInput0}
+            inputContainerStyle={styles.rNEInput1}
+            inputStyle={styles.rNEInput2}
+            rightIcon={<Text style={styles.input6}>.salozo.com</Text>}
             value={state?.data?.domainAddress ?? ''}
-            errorText={
-              isDomainNameValid || !errors.domainAddress
-                ? null
-                : errors.domainAddress
-            }
-            borderBottomColor={
-              isDomainNameFocused
-                ? '#0077be'
-                : !isDomainNameValid && errors.domainAddress
-                ? '#ff0033'
-                : '#d0d0d0'
-            }
           />
           <Input
+            maxLength={MAX_DIGITS_NUMBER_OF_STAFF}
             inputContainerStyle={[styles.input4]}
             keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
             placeholderTextColor={'#000'}
@@ -306,8 +182,8 @@ export default React.memo(() => {
             onFocus={() => updateInputValidEvent('numberEmployee', true)}
             onEndEditing={() => updateInputValidEvent('numberEmployee', false)}
             onChangeText={(value) => {
-              onSetInputValueEvent('numberEmployee', noSpaceAtEntry(value));
-              setFieldValue('numberEmployee', value);
+              onSetInputValueEvent('numberEmployee', numberOnly(value));
+              setFieldValue('numberEmployee', numberOnly(value));
             }}
             value={
               state?.data?.numberEmployee
@@ -319,18 +195,18 @@ export default React.memo(() => {
           <Input
             inputContainerStyle={[styles.input4]}
             keyboardType={Platform.OS === 'android' ? 'numeric' : 'number-pad'}
-            maxLength={12}
+            maxLength={PHONE_MAX_LENGTH}
             placeholderTextColor={'#000'}
-            title='Số điện thoại'
+            title= 'Số điện thoại'
             titleStyle={[styles.input3]}
             containerStyle={[styles.input2]}
             onBlur={handleBlur('mobile')}
             onFocus={() => updateInputValidEvent('mobile', true)}
             onEndEditing={() => updateInputValidEvent('mobile', false)}
             onChangeText={(value) => {
-              onSetInputValueEvent('mobile', value);
+              onSetInputValueEvent('mobile', numberOnly(value));
 
-              setFieldValue('mobile', value);
+              setFieldValue('mobile', numberOnly(value));
             }}
             value={state?.data?.mobile ?? ''}
             borderBottomColor={isMobileFocused ? '#0077be' : '#d0d0d0'}
@@ -338,7 +214,7 @@ export default React.memo(() => {
           <Input
             autoCapitalize="none"
             inputContainerStyle={[styles.input4]}
-            maxLength={70}
+            maxLength={STORE_ADDRESS_MAX_LENGTH}
             placeholderTextColor={'#000'}
             title='Địa chỉ'
             titleStyle={[styles.input3]}
@@ -363,6 +239,7 @@ export default React.memo(() => {
                   keyboardType={
                     Platform.OS === 'android' ? 'numeric' : 'number-pad'
                   }
+                  editable={false}
                   type={'datetime'}
                   options={{format: 'HH:mm'}}
                   inputContainerStyle={[styles.input4]}
@@ -389,6 +266,7 @@ export default React.memo(() => {
                   keyboardType={
                     Platform.OS === 'android' ? 'numeric' : 'number-pad'
                   }
+                  editable={false}
                   type={'datetime'}
                   options={{format: 'HH:mm'}}
                   inputContainerStyle={[styles.input4]}
@@ -407,21 +285,21 @@ export default React.memo(() => {
             </View>
           </View>
         </View>
+        <View style={{flex: 1}}></View>
+        <PrimaryButton
+          disabled={
+            state?.data?.name === '' || state?.data?.domainAddress === ''
+          }
+          containerStyle={[styles.myButton0]}
+          title="CẬP NHẬT"
+          onPress={handleSubmit}
+        />
       </MyScrollView0>
 
-      <Button
-        disabled={state?.data?.name === '' || state?.data?.domainAddress === ''}
-        ViewComponent={LinearGradient}
-        linearGradientProps={{
-          colors: ['#4db1e9', '#005eff'],
-          start: {x: 0, y: 1},
-          end: {x: 0, y: 0},
-        }}
-        containerStyle={[styles.myButton0]}
-        title='LƯU'
-        onPress={handleSubmit}
+      <CameraPopUp
+        isVisible={state?.canShowCamera}
+        onPress={onPressSelectorPopUpEvent}
       />
-      <CameraPopUp isVisible={state?.canShowCamera} onPress={_onPressCamera} />
 
       <TimePicker
         isVisible={canShowOpenTimePicker}
@@ -463,7 +341,7 @@ export default React.memo(() => {
           buttonText='Xác nhận'
           onPress={() => {
             onSetSuccessMessageEvent(undefined);
-            onGoBackEvent();
+            // onGoBackEvent();
           }}
         />
       )}

@@ -9,7 +9,10 @@ export default StyleSheet.create({
   view1: {
     flexDirection: 'row',
   },
-  view2: {flexDirection: 'row', justifyContent: 'space-between'},
+  view2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   view3: {position: 'absolute', top: '50%', right: 0},
   text0: {
     fontSize: 14,

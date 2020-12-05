@@ -47,6 +47,7 @@ export default React.memo(() => {
     onSetCanAddEvent,
     onCloseSuccessPopUpEvent,
     dispatch,
+    _setProfile
   } = useServiceListAccount();
 
   const {
@@ -96,7 +97,9 @@ export default React.memo(() => {
   };
 
   useEffect(() => {
+    _setProfile();
     onGetAllServicesEvent();
+    // reactotron.log('state.role: ' + state.role)
   }, []);
 
   // subs
@@ -193,7 +196,7 @@ export default React.memo(() => {
         <View style={[styles.view2]}>
           {data?.length === 0 && isSuccess ? _renderEmpty() : _renderList()}
         </View>
-        {role === MANAGER_ROLE && state.isEnabled && (
+        {state.role === MANAGER_ROLE && state.isEnabled && (
           <Button
             icon={<Image source={plus} />}
             ViewComponent={LinearGradient}

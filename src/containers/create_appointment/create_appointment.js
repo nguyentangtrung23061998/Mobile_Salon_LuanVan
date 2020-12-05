@@ -29,7 +29,6 @@ export default React.memo(({route}) => {
   const {
     state,
     form,
-    t,
     setIsNumberOfCustomerFocusedEvent,
     setCanShowCalendarEvent,
     onResetCustomerListEvent,
