@@ -76,10 +76,18 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     color: '#fff',
   },
+  text7: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: 17,
+    lineHeight: 23,
+    color: '#ea4f4f',
+  },
   swiper0: {bottom: 70},
 
   button0: {
     backgroundColor: '#fff',
+    height: 48,
+    borderRadius: 24,
   },
   button1: {
     fontFamily: 'Nunito-ExtraBold',
@@ -89,9 +97,9 @@ const styles = StyleSheet.create({
   },
   button2: {
     marginBottom: 25,
-    borderRadius: 20,
+    borderRadius: 24,
     borderColor: '#1792e6',
-    borderWidth: 1.3,
+    borderWidth: 1.5,
     marginHorizontal: 25,
   },
 

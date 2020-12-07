@@ -43,11 +43,11 @@ const useTodo = () => {
   const role = "";
   const _setProfile = async () => {
     try {
-      const profile = await getProfile();
+      const profile2 = await getProfile();
       // roleObj = profile.role;
-    
-     dispatch(setRole({value:  profile.role}));
-     reactotron.log('state.role: ' + state.role)
+      reactotron.log('state.role: ' + profile2.role)
+     dispatch(setRole({value:  profile2.role}));
+
     } catch (error) { }
   }
 

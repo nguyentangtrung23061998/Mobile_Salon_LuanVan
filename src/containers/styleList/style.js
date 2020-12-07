@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 90,
     justifyContent: 'space-between',
+    backgroundColor: 'transparent',
   },
 
   safeAreaView0: {
@@ -72,10 +73,15 @@ const styles = StyleSheet.create({
   button1: {
     position: 'absolute',
     left: 25,
-    bottom: 30,
+    bottom: 35,
     right: 25,
     borderRadius: 20,
   },
+  button2: {
+    height: 48,
+    borderRadius: 24,
+  },
+
   mTPImage0: {
     left: 10,
   },

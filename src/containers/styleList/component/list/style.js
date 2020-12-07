@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     justifyContent: 'flex-end',
-    padding: 10,
     aspectRatio: 1 / 1,
     borderRadius: 6,
   },
@@ -41,6 +40,10 @@ const styles = StyleSheet.create({
   view1: {
     backgroundColor: '#fff',
   },
+
+  flatGrid0:{
+    paddingBottom:100
+  }
 });
 
 export default styles;

@@ -324,7 +324,7 @@ const Button0 = styled(Button).attrs({
     borderWidth: 1.5,
   },
   containerStyle: {
-    marginTop: 100,
+    marginTop: -100,
     width: '48%',
   },
 })``;
@@ -351,7 +351,7 @@ const Button1 = styled(Button).attrs({
   },
   containerStyle: {
     width: '48%',
-    marginTop: 100,
+    marginTop: -100,
   },
 })``;
 

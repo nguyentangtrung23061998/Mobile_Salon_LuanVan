@@ -7,7 +7,7 @@ import storeInfoReducer from '../containers/storeInfo/with_store_info';
 import profileReducer from '../containers/profile/with_profile';
 import serviceReducer from '../containers/serviceList/with_service_list';
 import styleReducer from '../containers/styleList/with_style_list';
-import styleInfoReducer from '../containers/style_info/with_style_info';
+import styleInfoReducer from '../containers/style_info/state';
 import updateStyleReducer from '../containers/update_style/state';
 import listStaffReducer from '../containers/staffmanagement/liststaff/with_list_staff';
 import createStaffReducer from '../containers/staffmanagement/createstaff/with_create_staff';

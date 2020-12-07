@@ -36,9 +36,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   button0: {
-    marginHorizontal: 25,
     borderRadius: 20,
-    marginBottom: 30,
+    marginVertical: 35,
   },
   button1: {
     width: '100%',
@@ -57,11 +56,23 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     color: '#000',
   },
+  text2: {
+    fontFamily: 'Nunito-Bold',
+    marginTop: 20,
+    fontSize: 15,
+    lineHeight: 23,
+    textAlign: 'center',
+  },
 
   header0: {
     backgroundColor: '#fff',
     borderBottomColor: '#e8e8e8',
     borderBottomWidth: 1,
+  },
+
+  myScrollView00: {
+    flexGrow: 1,
+    paddingHorizontal: 25,
   },
 });
 

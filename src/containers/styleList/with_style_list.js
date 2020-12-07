@@ -1,22 +1,28 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import reactotron from 'reactotron-react-native';
 
 const initialState = {
   isLoading: undefined,
   isSuccess: undefined,
-  errMsg: undefined,
   data: undefined,
+  errorMessage: null,
   isEmpty: true,
 
   service: '',
+  role: ''
 };
 
 const StyleListAccount = createSlice({
   name: 'StyleListAccount',
   initialState: initialState,
   reducers: {
+    setErrorMessage: (state, action) => {
+      const { value } = action.payload;
+      state.errorMessage = value;
+    },
+
     setServiceStyleList0: (state, action) => {
-      const {value} = action.payload;
+      const { value } = action.payload;
       state.service = value;
     },
 
@@ -32,15 +38,16 @@ const StyleListAccount = createSlice({
     getStylesByServiceFaild: (state, action) => {
       state.isLoading = false;
       state.isSuccess = false;
-      state.errMsg = action.payload.errMsg;
+      const { message } = action.payload;
+      state.errorMessage = message;
       state.isEmpty = false;
     },
     updateStyleList: (state, action) => {
       state?.data?.push(action.payload.data);
     },
     editStyleList: (state, action) => {
-      const {data} = action.payload;
-      const {id, name, price, description, image} = data;
+      const { data } = action.payload;
+      const { id, name, price, description, image } = data;
       const selectedId = id;
       const newData = [...state?.data];
       const prevIndex = state.data.findIndex((item) => item.id === selectedId);
@@ -57,10 +64,14 @@ const StyleListAccount = createSlice({
       newData.splice(prevIndex, 1);
       state.data = newData;
     },
+    setRole2: (state, action) => {
+      const { value } = action.payload;
+      state.role = value;
+    }
   },
 });
 
-const {reducer, actions} = StyleListAccount;
+const { reducer, actions } = StyleListAccount;
 export const {
   getStylesByServiceLoading,
   getStylesByServiceSuccess,
@@ -69,6 +80,8 @@ export const {
   deleteStyle,
   editStyleList,
   setServiceStyleList0,
+  setErrorMessage,
+  setRole2
 } = actions;
 
 const reducerWrapper = (state, action) => {

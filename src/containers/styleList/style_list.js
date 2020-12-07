@@ -1,28 +1,40 @@
 import emptyStyle from '../../assets/icon/empty_style/empty_style.png';
 import plus from '../../assets/icon/plus/plus.png';
-import {Container} from 'native-base';
-import React, {useEffect, useCallback} from 'react';
-import {Image, Text, View} from 'react-native';
-import {Button, Header} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Container } from 'native-base';
+import React, { useCallback, useEffect } from 'react';
+import { Image, Text, View } from 'react-native';
+import { Button, Header } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import back from '../../assets/icon/back/back.png';
 import Loading from '../loading/loading';
-import useStyleInfo from '../style_info/use_style_info';
+import { MTPImage0 } from '../mtp_image';
+import { MANAGER_ROLE } from '../../constants/app';
 import List from './component/list/list';
 import styles from './style';
 import useStyleListAccount from './use_style_list';
-import {MANAGER_ROLE} from '../../constants/app';
-import {MTPImage0} from '../mtp_image/index';
+import ErrorPopUp from '../error_pop_up/error_pop_up';
+import { PrimaryButton } from '../primary_button/primary_button';
 import reactotron from 'reactotron-react-native';
-const StyleListAccount = ({route, navigation}) => {
-  const {item} = route?.params;
-  const {id, name} = item;
 
-  const {state, role, getStylesByServiceEvent, goBack} = useStyleListAccount();
-  const {isLoading} = state;
-  const {sendStyleInfoDataEvent} = useStyleInfo();
+const StyleListAccount = ({ route, navigation }) => {
+  const { item } = route?.params;
+  const { id } = item;
+
+  // myhook
+  const {
+    state,
+    getStylesByServiceEvent,
+    goBack,
+    onGoToStyleInfoEvent,
+    onSetErrorMessageEvent,
+    _setProfile
+  } = useStyleListAccount();
+
+  const { isLoading } = state;
+
   useEffect(() => {
+    _setProfile();
     getStylesByServiceEvent(id);
   }, []);
 
@@ -43,10 +55,7 @@ const StyleListAccount = ({route, navigation}) => {
     return (
       <List
         data={listData ?? []}
-        onPress={(it) => {
-          navigation.navigate('StyleInfo');
-          sendStyleInfoDataEvent(it, id);
-        }}
+        onPress={(item0) => onGoToStyleInfoEvent(item0, id)}
       />
     );
   };
@@ -55,12 +64,12 @@ const StyleListAccount = ({route, navigation}) => {
   const _leftComponent = useCallback(
     () => (
       <TouchableOpacity
+        activeOpacity={1}
         onPress={() => {
           goBack();
         }}>
         <View style={styles.view2}>
           <MTPImage0 source={back} style={styles.mTPImage0} />
-          <Text style={styles.text1}>Dịch vụ</Text>
         </View>
       </TouchableOpacity>
     ),
@@ -85,24 +94,23 @@ const StyleListAccount = ({route, navigation}) => {
         {state?.data?.length === 0 ? _renderEmpty() : _renderList(state?.data)}
       </View>
 
-      {!state.isEmpty && role === MANAGER_ROLE && (
-        <Button
-          icon={<Image source={plus} />}
-          ViewComponent={LinearGradient}
-          linearGradientProps={{
-            colors: ['#4db1e9', '#005eff'],
-            start: {x: 0, y: 1},
-            end: {x: 0, y: 0},
-          }}
-          title={'  TẠO MỚI KIỂU DÁNG'}
+      { state.role === MANAGER_ROLE && (
+        <PrimaryButton
+          title={'TẠO MỚI KIỂU DÁNG'}
           onPress={() => {
-            navigation.navigate('CreateStyle', {id: id});
+            navigation.navigate('CreateStyle', { id: id });
           }}
-          titleStyle={[styles.button0]}
           containerStyle={[styles.button1]}
         />
       )}
       {isLoading && <Loading />}
+      {state.errMsg && (
+        <ErrorPopUp
+          msg={state.errMsg}
+          buttonText="Quay lại"
+          onPress={() => onSetErrorMessageEvent(null)}
+        />
+      )}
     </Container>
   );
 };

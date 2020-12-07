@@ -32,7 +32,6 @@ export default React.memo(() => {
 
   const {
     state,
-    role,
     updateServiceUpdateTitleEvent,
     onGetAllServicesEvent,
     deleteServiceEvent,
@@ -99,7 +98,6 @@ export default React.memo(() => {
   useEffect(() => {
     _setProfile();
     onGetAllServicesEvent();
-    // reactotron.log('state.role: ' + state.role)
   }, []);
 
   // subs
