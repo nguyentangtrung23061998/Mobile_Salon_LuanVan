@@ -4,43 +4,71 @@ import validator from 'validator';
 
 import { getAPI, postAPI, deleteAPI, putAPI } from './base';
 
-import { checkCheckdomainUrl, 
-          urlLogin, 
-          getStoreDetailsUrl,
-          updateStoreUrl,
-          serviceUrl,
-          deleteServiceUrl,
-          createServiceUrl,
-          updateServiceUrl,
-          getStylesByServiceUrl,
-          createStyleUrl,
-          deleteStyleUrl,
-          updateStyleUrl,
-          registerEmployeeUrl,
-          getAllEmployeesUrl,
-          updateStaffUrl,
-          changePasswordUrl,
-          getAllCustomersUrl,
-          createCustomerUrl,
-          updateCustomerUrl,
-          deleteEmployeeUrl,
-          deleteCustomerUrl,
-          getAllOrderUrl,
-          finishOrderUrl,
-          updateOrderUrl,
-          cancelOnrderUrl,
-          getCustomersByPhoneUrl,
-          getOrdersByDateUrl,
-          createOrderUrl,
-          addCustomerUrl,
-          getAppointmentsByDateUrl,
-          cancelAppointmentUrl,
-          confirmAppointmentSuccessUrl,
-          createAppointmentUrl,
-          updateAppointmentUrl,
-          registerUrl,
-          updateProfileUrl
-        } from './urls';
+import {
+  checkCheckdomainUrl,
+  urlLogin,
+  getStoreDetailsUrl,
+  updateStoreUrl,
+  serviceUrl,
+  deleteServiceUrl,
+  createServiceUrl,
+  updateServiceUrl,
+  getStylesByServiceUrl,
+  createStyleUrl,
+  deleteStyleUrl,
+  updateStyleUrl,
+  registerEmployeeUrl,
+  getAllEmployeesUrl,
+  updateStaffUrl,
+  changePasswordUrl,
+  getAllCustomersUrl,
+  createCustomerUrl,
+  updateCustomerUrl,
+  deleteEmployeeUrl,
+  deleteCustomerUrl,
+  getAllOrderUrl,
+  finishOrderUrl,
+  updateOrderUrl,
+  cancelOnrderUrl,
+  getCustomersByPhoneUrl,
+  getOrdersByDateUrl,
+  createOrderUrl,
+  addCustomerUrl,
+  getAppointmentsByDateUrl,
+  cancelAppointmentUrl,
+  confirmAppointmentSuccessUrl,
+  createAppointmentUrl,
+  updateAppointmentUrl,
+  registerUrl,
+  updateProfileUrl,
+  getReportTotalUrl,
+  sendOtpUrl,
+  verifyOtpUrl,
+  changePasswordOtpUrl
+} from './urls';
+
+export const sendOtp = (fromPhone,toPhone) => {
+  return postAPI(sendOtpUrl, {fromPhone,toPhone});
+}
+
+export const verifyOtp = (mobile, otp)=>{
+  return postAPI(verifyOtpUrl, {
+    mobile,
+    otp
+  })
+}
+
+export const changePasswordOtp = (mobile,newPassword) => {
+  return postAPI(changePasswordOtpUrl,{mobile,newPassword});
+}
+
+export const getReportTotal = (reportType, dateFrom, dateTo) => {
+  return getAPI(
+    getReportTotalUrl,
+    {},
+    { params: { reportType, dateFrom, dateTo } },
+  );
+};
 
 export const postLogin = (domainAddress, mobile, password) => {
   return postAPI(urlLogin, {
@@ -75,14 +103,14 @@ export const updateStore = (formData) => {
 };
 
 export const createService = (name, image) => {
-  return postAPI(createServiceUrl, {name, image});
+  return postAPI(createServiceUrl, { name, image });
 };
 export const deleteService = (id) => {
   return deleteAPI(`${deleteServiceUrl}${id}`);
 };
 
 export const updateService = (id, name, image) => {
-  return putAPI(updateServiceUrl + id, {name, image});
+  return putAPI(updateServiceUrl + id, { name, image });
 };
 
 export const getAllServices = () => {
@@ -217,7 +245,7 @@ export const cancelOnrder = (orderId) => {
 };
 
 export const getCustomersByPhone = (mobile) => {
-  return getAPI(getCustomersByPhoneUrl, {}, {params: {mobile}});
+  return getAPI(getCustomersByPhoneUrl, {}, { params: { mobile } });
 };
 
 export const getOrdersByDate = (status, date) => {
@@ -244,7 +272,7 @@ export const createOrder = (userId, services, description, total) => {
 };
 
 export const addCustomer = (fullname, mobile) => {
-  return postAPI(addCustomerUrl, {fullname, mobile});
+  return postAPI(addCustomerUrl, { fullname, mobile });
 };
 
 export const getAppointmentsByDate = (date) => {
@@ -337,7 +365,7 @@ export const updateProfile = (
   });
 };
 export const changePassword = (currentPassword, newPassword) => {
-  return postAPI(changePasswordUrl, {currentPassword, newPassword});
+  return postAPI(changePasswordUrl, { currentPassword, newPassword });
 };
 
 

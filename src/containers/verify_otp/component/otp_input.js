@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, TextInput, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 class OTPInput extends Component {
@@ -37,7 +37,7 @@ class OTPInput extends Component {
       nextProps.hasOwnProperty('value') &&
       nextProps.value !== this.state.internalVal
     ) {
-      this.setState({internalVal: nextProps.value});
+      this.setState({ internalVal: nextProps.value });
     }
   }
 
@@ -52,7 +52,7 @@ class OTPInput extends Component {
   }
 
   blinkAnimation() {
-    const {tintColor, focusHighlight} = this.props;
+    const { tintColor, focusHighlight } = this.props;
     if (focusHighlight) {
       let transparency = 0;
       let increase = true;
@@ -77,7 +77,7 @@ class OTPInput extends Component {
         // Define blinking time in milliseconds
         1;
       });
-      this.setState({blinkInterval});
+      this.setState({ blinkInterval });
     }
   }
 
@@ -88,10 +88,10 @@ class OTPInput extends Component {
   }
 
   handleChangeText = (val) => {
-    const {onChange} = this.props;
+    const { onChange } = this.props;
 
     onChange(val);
-    this.setState({internalVal: val});
+    this.setState({ internalVal: val });
   };
 
   // public methods
@@ -114,11 +114,11 @@ class OTPInput extends Component {
   }
 
   clear() {
-    this.setState({internalVal: ''});
+    this.setState({ internalVal: '' });
   }
 
   handleFocus(index) {
-    const {internalVal} = this.state;
+    const { internalVal } = this.state;
     if (internalVal && internalVal.length) {
       let aux = [...internalVal];
       for (var i = index; i < internalVal.length; i++) {
@@ -140,7 +140,7 @@ class OTPInput extends Component {
       ...otherProps
     } = this.props;
 
-    const {internalVal, blinkTintColor} = this.state;
+    const { internalVal, blinkTintColor } = this.state;
 
     return (
       <View>
@@ -148,7 +148,7 @@ class OTPInput extends Component {
           caretHidden={true}
           ref={(input) => (this.textInput = input)}
           onChangeText={this.handleChangeText}
-          style={{width: 0, height: 0}}
+          style={{ width: 0, height: 0 }}
           value={internalVal || 0}
           minLength={otpLength}
           maxLength={otpLength}
@@ -168,7 +168,7 @@ class OTPInput extends Component {
                   {
                     borderColor:
                       (internalVal && index === internalVal.length) ||
-                      (!internalVal && index == 0)
+                        (!internalVal && index == 0)
                         ? blinkTintColor
                         : offTintColor,
                   },

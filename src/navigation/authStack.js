@@ -7,6 +7,8 @@ import SignUpAccount from '../containers/signup/signupaccount/sign_up_account';
 import SignUpSuccess from '../containers/signUpSuccess/sign_up_success';
 import VerifyOtp from '../containers/verify_otp/verify_otp';
 import SignUpSuccessAccount from '../containers/signUpSuccess/sign_up_success';
+import ForgotPassword from '../containers/forgot_password/forgot_password';
+import CreateNewPassword from '../containers/create_new_password/create_new_password';
 // import Main from '../containers/main/main'
 
 const Stack = createStackNavigator();
@@ -18,11 +20,12 @@ export default AuthStack = () => (<>
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen component={VerifyDomain} name="VerifyDomain" />
-        {/* <Stack.Screen component={Main} name="Main" /> */}
         <Stack.Screen component={SignUpAccount} name="SignUpAccount" />
         <Stack.Screen component={SignUpSuccess} name="SignUpSuccess" />
         <Stack.Screen component={SignUpSuccessAccount} name="SignUpSuccessAccount" />
+        <Stack.Screen component={ForgotPassword} name="ForgotPassword" />
         <Stack.Screen component={VerifyOtp} name="VerifyOtp" />
+        <Stack.Screen component={CreateNewPassword} name="CreateNewPassword" />
     </Stack.Navigator>
 </>)
 

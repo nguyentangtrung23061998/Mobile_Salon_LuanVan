@@ -49,3 +49,9 @@ export const createAppointmentUrl = '/schedules/';
 export const confirmAppointmentSuccessUrl = '/schedules/arrived/';
 
 export const updateProfileUrl = '/users/updateProfile';
+
+export const getReportTotalUrl = '/report/total';
+
+export const sendOtpUrl = '/send-otp-v2';
+export const verifyOtpUrl = '/verify-otp';
+export const changePasswordOtpUrl = '/change-password-otp';

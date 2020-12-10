@@ -1,7 +1,7 @@
 import PopUp from '../popup/pop_up.js';
 import {Container} from 'native-base';
 import React, {useRef} from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import {Image, Platform, Text, View,TouchableOpacity} from 'react-native';
 import salozoText from '../../assets/icon/salozoText/salozo_text.png';
 import {HeaderNavigation} from '../header_navigation/header_navigation';
 import Input from '../inputprimary/input';
@@ -21,6 +21,7 @@ export default React.memo(() => {
     updateInputValidEvent,
     isFormValid,
     onCloseErrorPopUpEvent,
+    _navigation
   } = useLogin();
   const passwordRef = useRef();
 
@@ -114,6 +115,12 @@ export default React.memo(() => {
             }}>
             <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
           </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => {
+              _navigation.navigate('ForgotPassword');
+            }}>
+            <Text style={styles.text1}>{'Quên mật khẩu?'}</Text>
+          </TouchableOpacity>
       </MyScrollView0>
       <PopUp
         title={errorMsg ?? ''}

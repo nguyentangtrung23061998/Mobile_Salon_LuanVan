@@ -1,17 +1,24 @@
-import React, {useEffect} from 'react';
-import {Image, Text, TouchableOpacity, View, Keyboard} from 'react-native';
+import React, { useEffect } from 'react';
+import PopUp from '../popup/pop_up.js';
+import { Image, Text, TouchableOpacity, View, Keyboard } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import styled from 'styled-components/native';
 import back from '../../assets/icon/back/back.png';
 import OTPInput from './component/otp_input.js';
 import useVerifyOtp from './hook';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Button} from 'react-native-elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Button } from 'react-native-elements';
 import reload from '../../assets/icon/reload/reload.png';
 import rightArrow from '../../assets/icon/rightBlueArrow/right_blue_arrow.png';
-import {setCounter, setOtp} from './state';
+import { setCounter, setOtp } from './state';
+import styles from './style';
+
+import OTPInputView from '@twotalltotems/react-native-otp-input'
+
+import reactotron from 'reactotron-react-native';
+
 const SafeAreaView0 = styled(SafeAreaView).attrs({
-  forceInset: {top: 'always'},
+  forceInset: { top: 'always' },
 })`
   flex: 1;
   background-color: #fff;
@@ -101,25 +108,27 @@ const Button1 = styled(Button).attrs({
 
 const KeyboardAwareScrollView0 = styled(KeyboardAwareScrollView).attrs({})``;
 export default function VerifyOtp() {
-  const {state, navigation, dispatch} = useVerifyOtp();
+  const { state, stateForgetPass, verify, navigation, dispatch,onCloseErrorPopUpEvent } = useVerifyOtp();
 
-  useEffect(() => {
-    let timer;
-    if (state.counter !== 0) {
-      timer = setTimeout(() => {
-        dispatch(setCounter('start'));
-      }, 1000);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [state.counter]);
+  // useEffect(() => {
+  //   let timer;
+  //   if (state.counter !== 0) {
+  //     timer = setTimeout(() => {
+  //       dispatch(setCounter('start'));
+  //     }, 1000);
+  //   }
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [state.counter]);
 
-  useEffect(() => {
-    if (state?.otp?.length === 4) {
-      Keyboard.dismiss();
-    }
-  }, [state.otp]);
+  // useEffect(() => {
+
+  //   if (state?.otp?.length === 4) {
+  //     Keyboard.dismiss();
+  //   }
+
+  // }, [state.otp]);
 
   // render
   return (
@@ -136,27 +145,40 @@ export default function VerifyOtp() {
         <View0>
           <Text0>MÃ XÁC NHẬN</Text0>
           <Text1>Nhập mã xác thực đã được gửi đến số điện thoại</Text1>
-          <Text2>0899500895</Text2>
-          <OTPInput0
+          <Text2>{stateForgetPass.mobile}</Text2>
+          {/* <OTPInput0
             value={state?.otp}
             onChange={(value) => {
               dispatch(setOtp(value.toString()));
             }}
+          /> */}
+
+          <OTPInputView
+            style={{ width: '80%', height: 200 }}
+            pinCount={4}
+            // code={state.otp} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+            autoFocusOnLoad
+            codeInputFieldStyle={styles.underlineStyleBase}
+            codeInputHighlightStyle={styles.underlineStyleHighLighted}
+            value={state?.otp}
+            onCodeFilled={(code => {
+              dispatch(setOtp(code));
+            })}
           />
-          <Text3>Gửi lại sau: 00:{state.counter}s</Text3>
-          <TouchableOpacity>
+          {/* <Text3>Gửi lại sau: 00:{state.counter}s</Text3> */}
+          <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
             <Text4>Sử dụng số điện thoại khác</Text4>
           </TouchableOpacity>
-          <Button0
+          {/* <Button0
             onPress={() => {
-              dispatch(setCounter('restart'));
+              // dispatch(setCounter('restart'));
+              sentOtp();
             }}
             icon={() => {
               return <Image source={reload} />;
             }}
             title={'   GỬI LẠI MÃ'}
-            disabled={!(state.counter === 0)}
-          />
+          /> */}
           <Button1
             iconRight
             icon={() => {
@@ -164,11 +186,18 @@ export default function VerifyOtp() {
             }}
             title={'TIẾP TỤC   '}
             onPress={() => {
-              navigation.navigate('CreateNewPassword');
+              verify();
             }}
           />
         </View0>
       </KeyboardAwareScrollView0>
+      <PopUp
+        title={'Mã OTP không hợp lệ'}
+        isVisible={!state.status}
+        bottomButtonTitle={'Trở lại'}
+        hasBottomButton={true}
+        onPressBottomButton={onCloseErrorPopUpEvent}
+      />
     </SafeAreaView0>
   );
 }

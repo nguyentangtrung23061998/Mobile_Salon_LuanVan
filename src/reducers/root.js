@@ -37,7 +37,9 @@ import editProfileReducer from '../containers/edit_profile/state';
 import signupSuccessReducer from '../containers/signUpSuccess/with_sign_up_success';
 import changePasswordReducer from '../containers/change_password/state';
 import changePasswordStaffReducer from '../containers/staffmanagement/editstaff/component/popUpChangePassword/state';
-
+import forgotPasswordReducer from '../containers/forgot_password/state';
+import verifyOtpReducer from '../containers/verify_otp/state';
+import createNewPasswordReducer from '../containers/create_new_password/state';
 const rootRecuder = combineReducers({
     app: appReducer,
     verifyDomain: verifyDomainReducerWrapper,
@@ -80,6 +82,9 @@ const rootRecuder = combineReducers({
     signupSuccess: signupSuccessReducer,
     changePassword: changePasswordReducer,
     changePasswordStaff: changePasswordStaffReducer,
+    forgotPassword: forgotPasswordReducer,
+    verifyOtp: verifyOtpReducer,
+    createNewPassword: createNewPasswordReducer,
 })
 
 const rootReducerWrapper = (state, action) => {

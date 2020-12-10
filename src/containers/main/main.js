@@ -6,6 +6,8 @@ import Home from '../home/home';
 import styles from './style';
 import profile from '../../assets/icon/profile/profile.png';
 import Profile from '../profile/profile';
+import Analytic from '../analytic/analytic';
+import analytic from '../../assets/icon/analytic/analytic.png';
 const Tab = createBottomTabNavigator();
 
 const tintColor = '#1792e6';
@@ -32,6 +34,25 @@ const Main = ({ route }) => {
                             />
                         ),
                         tabBarLabel: isFocused() ? 'Trang Chủ' : 'Trang Chủ',
+                    };
+                }}
+            />
+            <Tab.Screen
+                name="Analytic"
+                initialParams={route}
+                component={Analytic}
+                options={({ navigation: { isFocused } }) => {
+                    return {
+                        tabBarIcon: ({ color }) => (
+                            <Image
+                                source={analytic}
+                                style={[
+                                    { tintColor: isFocused() ? tintColor : color },
+                                    styles.image0,
+                                ]}
+                            />
+                        ),
+                        tabBarLabel: isFocused() ? 'Thống kê' : 'Thống kê',
                     };
                 }}
             />

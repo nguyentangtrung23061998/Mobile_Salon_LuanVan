@@ -26,9 +26,9 @@ const handleRes = (res) => {
         const data = getSafeValue(res, 'data', null);//
         const message = getSafeValue(res, 'message', '');//
         const status = getSafeValue(res, 'status', StatusResponse.success);//
-        reactotron.log("data: ",data)
-        reactotron.log("message: ",message)
-        reactotron.log("message: ",message)
+        // reactotron.log("data: ",data)
+        // reactotron.log("message: ",message)
+        // reactotron.log("message: ",message)
 
         if (!res.ok && res.problem) {
             if (message === '') {

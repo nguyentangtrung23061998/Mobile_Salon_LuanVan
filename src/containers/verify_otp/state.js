@@ -3,6 +3,7 @@ import {OTP_COUNT_DOWN} from '../../constants/app';
 const initialState = {
   counter: OTP_COUNT_DOWN,
   otp: '',
+  status:true
 };
 
 const verifyOtp = createSlice({
@@ -21,11 +22,17 @@ const verifyOtp = createSlice({
     setOtp: (state, action) => {
       state.otp = action.payload;
     },
+    onCloseErrorPopUp:(state,action)=>{
+      state.status = action.payload;
+    }
   },
 });
 
 const {reducer, actions} = verifyOtp;
-export const {verifyOtpAction, setCounter, setOtp} = actions;
+export const {verifyOtpAction, 
+            setCounter, 
+            setOtp,
+            onCloseErrorPopUp} = actions;
 
 const verifyOtpReducerWrapper = (state, action) => {
   // if (action.type === 'app/setAuth') {
