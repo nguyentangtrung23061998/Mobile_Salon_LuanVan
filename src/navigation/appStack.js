@@ -34,6 +34,7 @@ import CustomerList from '../containers/customer_list/customer_list';
 import EditProfile from '../containers/edit_profile/edit_profile';
 import ChangePassword from '../containers/change_password/change_password';
 import Home from '../containers/home/home';
+import AddCustomer0 from '../containers/add_customer/add_customer';
 const Stack = createStackNavigator();
 
 export default AppStack = () => {
@@ -76,6 +77,7 @@ export default AppStack = () => {
       <Stack.Screen component={CustomerList0} name="CustomerList0" />
       <Stack.Screen component={CustomerList} name="CustomerList" />
       <Stack.Screen component={EditProfile} name="EditProfile" />
+      <Stack.Screen component={AddCustomer0} name="AddCustomer0" />
     </Stack.Navigator>
   );
 };

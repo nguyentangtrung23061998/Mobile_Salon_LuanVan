@@ -117,10 +117,10 @@ export default React.memo(() => {
       return (
         <View style={[styles.view10]}>
           <View style={[styles.view11]}>
-            <SalonIcon
+             <SalonIcon
               onPress={() => onNavigateEvent('ServiceList')}
               source={home_service}
-              titleText='Đơn hàng'
+              titleText='Dịch vụ'
               descriptionText='Quản lý các dịch vụ của salon'
             />
             <View style={styles.view13} />

@@ -33,7 +33,6 @@ import {
   setErrorMessage,
 } from './state';
 import reactotron from 'reactotron-react-native';
-import {useTranslation} from 'react-i18next';
 import {getOrdersByDate} from '../../../api';
 import {
   PROCESSING_ORDERS_PARAM,

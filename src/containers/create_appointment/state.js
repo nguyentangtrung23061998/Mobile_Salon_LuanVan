@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import moment from 'moment';
+import reactotron from 'reactotron-react-native';
 const FORMAT = 'YYYY-MM-DD';
 const FORMAT2 = 'DD/MM/YYYY';
 const TODAY = moment().format(FORMAT);
@@ -78,6 +79,7 @@ const createAppointment = createSlice({
       state.markedDates = date1;
     },
     resetSelectedDate: (state, action) => {
+      reactotron.log("state.date: " +state.date)
       if (state.date) {
         const date0 = moment(state.date, 'DD/MM/YYYY').format('YYYY-MM-DD');
         const date1 = {

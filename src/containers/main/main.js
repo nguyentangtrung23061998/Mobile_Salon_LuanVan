@@ -37,7 +37,7 @@ const Main = ({ route }) => {
                     };
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Analytic"
                 initialParams={route}
                 component={Analytic}
@@ -55,7 +55,7 @@ const Main = ({ route }) => {
                         tabBarLabel: isFocused() ? 'Thống kê' : 'Thống kê',
                     };
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Profile"
                 initialParams={route}

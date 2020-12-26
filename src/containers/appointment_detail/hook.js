@@ -15,6 +15,7 @@ import {
   setMsgSuccess,
 } from './state';
 import {getStoreInfo} from '../../utility/local_storage';
+import reactotron from 'reactotron-react-native';
 
 const useTodo = () => {
   const state = useSelector((rootReducer) => rootReducer.appointmentDetail);
@@ -59,6 +60,7 @@ const useTodo = () => {
 
   const onCancelAppointmentEvent = async () => {
     const id = state.data.id;
+    reactotron.log("state data: " + state.data)
     dispatch(cancelAppointmentLoading());
     try {
       const response = await cancelAppointment(id);

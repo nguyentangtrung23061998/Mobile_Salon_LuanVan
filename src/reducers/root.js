@@ -40,6 +40,7 @@ import changePasswordStaffReducer from '../containers/staffmanagement/editstaff/
 import forgotPasswordReducer from '../containers/forgot_password/state';
 import verifyOtpReducer from '../containers/verify_otp/state';
 import createNewPasswordReducer from '../containers/create_new_password/state';
+import addCustomer from '../containers/add_customer/state';
 const rootRecuder = combineReducers({
     app: appReducer,
     verifyDomain: verifyDomainReducerWrapper,
@@ -62,9 +63,9 @@ const rootRecuder = combineReducers({
     createCustomer: createCustomerReducer,
     listCustomer: listCustomerReducer,
     editCustomer: editCustomerReducer,
-    infoCustomer: infoCustomerReducer,
+    // infoCustomer: infoCustomerReducer,
     order: orderReducer,
-    addcustomer: addcustomerReducer,
+    addCustomer,
     createOrder: createOrderReducer,
     appointment: appointmentReducer,
     editOrder,
